@@ -43,7 +43,7 @@ class LaravelConfigServiceProvider extends ServiceProvider
             return new LaravelConfig;
         });
 
-        $this->registerEloquentFactoriesFrom(__DIR__ . '/../src/factories');
+        $this->registerEloquentFactoriesFrom(__DIR__.'/../src/factories');
     }
 
     public function registerEloquentFactoriesFrom($path)
