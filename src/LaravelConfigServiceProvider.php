@@ -25,7 +25,7 @@ class LaravelConfigServiceProvider extends ServiceProvider
             */
 
             $this->publishes([
-                __DIR__ . '/../database/migrations/2020_01_14_152443_create_config_table.php.stub' => database_path('migrations/2020_01_14_152443_create_config_table.php')
+                __DIR__.'/../database/migrations/2020_01_14_152443_create_config_table.php.stub' => database_path('migrations/2020_01_14_152443_create_config_table.php'),
             ], 'migrations');
         }
     }
