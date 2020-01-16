@@ -8,7 +8,7 @@ use TarfinLabs\LaravelConfig\Config\ConfigItem;
 class LaravelConfig
 {
     /**
-     * Get config by given name
+     * Get config by given name.
      *
      * @param string $name
      * @param $default
@@ -16,9 +16,9 @@ class LaravelConfig
      */
     public function get(string $name, $default = null)
     {
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             return $default;
-        };
+        }
 
         $config = Config::where('name', $name)->first();
 
@@ -26,7 +26,7 @@ class LaravelConfig
     }
 
     /**
-     * Set config with given data
+     * Set config with given data.
      *
      * @param string $name
      * @param $value
@@ -34,8 +34,8 @@ class LaravelConfig
      */
     public function set(string $name, $value)
     {
-        if (!$this->has($name)) {
-            return null;
+        if (! $this->has($name)) {
+            return;
         }
 
         $config = Config::where('name', $name)->first();
@@ -47,7 +47,7 @@ class LaravelConfig
     }
 
     /**
-     * Check whether a config parameter is set
+     * Check whether a config parameter is set.
      *
      * @param string $name
      * @return bool
@@ -58,7 +58,7 @@ class LaravelConfig
     }
 
     /**
-     * Get all config paremeters
+     * Get all config paremeters.
      *
      * @return mixed
      */
@@ -68,7 +68,7 @@ class LaravelConfig
     }
 
     /**
-     * Create a new config parameter
+     * Create a new config parameter.
      *
      * @param ConfigItem $configItem
      * @return bool
@@ -85,7 +85,7 @@ class LaravelConfig
     }
 
     /**
-     * Update config paremeter
+     * Update config paremeter.
      *
      * @param Config $config
      * @param ConfigItem $configItem
@@ -97,7 +97,7 @@ class LaravelConfig
     }
 
     /**
-     * Delete config parameter
+     * Delete config parameter.
      *
      * @param Config $config
      * @return int
@@ -108,7 +108,7 @@ class LaravelConfig
     }
 
     /**
-     * Fill config paremeter columns
+     * Fill config paremeter columns.
      *
      * @param Config $config
      * @param ConfigItem $configItem
