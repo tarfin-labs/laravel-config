@@ -25,7 +25,7 @@ class LaravelConfigServiceProvider extends ServiceProvider
             */
 
             $this->publishes([
-                __DIR__ . '/database/migrations/' => database_path('migrations')
+                __DIR__ . '/../database/migrations/' => database_path('migrations')
             ], 'migrations');
         }
     }
@@ -43,7 +43,7 @@ class LaravelConfigServiceProvider extends ServiceProvider
             return new LaravelConfig;
         });
 
-        $this->registerEloquentFactoriesFrom(__DIR__ . '/../src/database/factories');
+        $this->registerEloquentFactoriesFrom(__DIR__ . '/../src/factories');
     }
 
     public function registerEloquentFactoriesFrom($path)

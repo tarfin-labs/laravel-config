@@ -1,6 +1,6 @@
 <?php
 
-namespace TarfinLabs\LaravelConfig\Database\Factories;
+namespace TarfinLabs\LaravelConfig\Factories;
 
 use TarfinLabs\LaravelConfig\Config\Config;
 use Faker\Generator as Faker;
