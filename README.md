@@ -66,21 +66,22 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
 
 ### Security
 
-If you discover any security related issues, please email tkaratug@hotmail.com.tr instead of using the issue tracker.
+If you discover any security related issues, please email development@tarfin.com instead of using the issue tracker.
 
 ## Credits
 
-- [Turan Karatuğ](https://github.com/tarfin-labs)
+- [Turan Karatuğ](https://github.com/tkaratug)
+- [Faruk Can](https://github.com/frkcn)
+- [Yunus Emre Deligöz](https://github.com/deligoez)
+- [Hakan Özdemir](https://github.com/hozdemir)
 - [All Contributors](../../contributors)
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
+Laravel config is open-sourced software licensed under the [MIT license](LICENSE.md).

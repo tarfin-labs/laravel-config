@@ -11,12 +11,27 @@
     "authors": [
         {
             "name": "Turan Karatuğ",
-            "email": "tkaratug@hotmail.com.tr",
+            "email": "turan.karatug@tarfin.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Faruk Can",
+            "email": "faruk.can@tarfin.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Yunus Emre Deligöz",
+            "email": "emre.deligoz@tarfin.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Hakan Özdemir",
+            "email": "hakan.ozdemir@tarfin.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.2",
         "illuminate/support": "6.11.0"
     },
     "require-dev": {
