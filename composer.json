@@ -1,0 +1,54 @@
+{
+    "name": "tarfin-labs/laravel-config",
+    "description": "Key value config management for Laravel",
+    "keywords": [
+        "tarfin-labs",
+        "laravel-config"
+    ],
+    "homepage": "https://github.com/tarfin-labs/laravel-config",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Turan Karatuğ",
+            "email": "tkaratug@hotmail.com.tr",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "6.11.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "4.5.*",
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "TarfinLabs\\LaravelConfig\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TarfinLabs\\LaravelConfig\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TarfinLabs\\LaravelConfig\\LaravelConfigServiceProvider"
+            ],
+            "aliases": {
+                "LaravelConfig": "TarfinLabs\\LaravelConfig\\LaravelConfigFacade"
+            }
+        }
+    }
+}
