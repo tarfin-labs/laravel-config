@@ -1,7 +1,7 @@
 # Very short description of the package
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tarfin-labs/laravel-config.svg?style=flat-square)](https://packagist.org/packages/tarfin-labs/laravel-config)
-[![Build Status](https://img.shields.io/travis/tarfin-labs/laravel-config/master.svg?style=flat-square)](https://travis-ci.org/tarfin-labs/laravel-config)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tarfin-labs/laravel-config/tests?label=tests)
 [![Quality Score](https://img.shields.io/scrutinizer/g/tarfin-labs/laravel-config.svg?style=flat-square)](https://scrutinizer-ci.com/g/tarfin-labs/laravel-config)
 [![Total Downloads](https://img.shields.io/packagist/dt/tarfin-labs/laravel-config.svg?style=flat-square)](https://packagist.org/packages/tarfin-labs/laravel-config)
 
