@@ -1,5 +1,8 @@
 build
 composer.lock
 docs
-vendor
+/vendor
 coverage
+/.idea
+/phpunit.xml
+.phpunit.result.cache

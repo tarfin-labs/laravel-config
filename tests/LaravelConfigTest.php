@@ -38,7 +38,7 @@ class LaravelConfigTest extends TestCase
             'name' => $configItem->name,
             'val' => $configItem->val,
             'type' => $configItem->type,
-            'description' => $configItem->description
+            'description' => $configItem->description,
         ]);
     }
 
@@ -78,7 +78,7 @@ class LaravelConfigTest extends TestCase
             'name' => $config->name,
             'val' => $configItem->val,
             'type' => $configItem->type,
-            'description' => $configItem->description
+            'description' => $configItem->description,
         ]);
     }
 

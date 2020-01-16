@@ -18,7 +18,7 @@ class ConfigFactory
     {
         $this->configItem = new ConfigItem();
 
-        if (!is_null($config)) {
+        if (! is_null($config)) {
             $this->setName($config->name)
                 ->setValue($config->val)
                 ->setType($config->type)
@@ -27,55 +27,59 @@ class ConfigFactory
     }
 
     /**
-     * Set the name of config paremeter
+     * Set the name of config paremeter.
      *
      * @param string $name
      * @return $this
      */
-    public function setName(string $name): ConfigFactory
+    public function setName(string $name): self
     {
         $this->configItem->name = $name;
+
         return $this;
     }
 
     /**
-     * Set the value of config parameter
+     * Set the value of config parameter.
      *
      * @param $value
      * @return $this
      */
-    public function setValue($value): ConfigFactory
+    public function setValue($value): self
     {
         $this->configItem->val = $value;
+
         return $this;
     }
 
     /**
-     * Set the type of config parameter
+     * Set the type of config parameter.
      *
      * @param $type
      * @return $this
      */
-    public function setType($type): ConfigFactory
+    public function setType($type): self
     {
         $this->configItem->type = $type;
+
         return $this;
     }
 
     /**
-     * Set the description of config parameter
+     * Set the description of config parameter.
      *
      * @param $description
      * @return $this
      */
-    public function setDescription($description): ConfigFactory
+    public function setDescription($description): self
     {
         $this->configItem->description = $description;
+
         return $this;
     }
 
     /**
-     * return ConfigItem
+     * return ConfigItem.
      *
      * @return ConfigItem
      */

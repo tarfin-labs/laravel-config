@@ -10,7 +10,7 @@ class ConfigItem
     /** @var string */
     public $val;
 
-    /** @var string  */
+    /** @var string */
     public $type = 'boolean';
 
     /** @var string|null */
