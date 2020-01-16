@@ -1,24 +1,30 @@
-# Very short description of the package
+# Laravel Config 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tarfin-labs/laravel-config.svg?style=flat-square)](https://packagist.org/packages/tarfin-labs/laravel-config)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tarfin-labs/laravel-config/tests?label=tests)
 [![Quality Score](https://img.shields.io/scrutinizer/g/tarfin-labs/laravel-config.svg?style=flat-square)](https://scrutinizer-ci.com/g/tarfin-labs/laravel-config)
 [![Total Downloads](https://img.shields.io/packagist/dt/tarfin-labs/laravel-config.svg?style=flat-square)](https://packagist.org/packages/tarfin-labs/laravel-config)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
-
+## Introduction
+Laravel config provides a simple configuration system for your Laravel application. 
 ## Installation
-
 You can install the package via composer:
-
 ```bash
 composer require tarfin-labs/laravel-config
 ```
+Next, you should publish the Laravel migration files using the vendor:publish Artisan command.
+```
+php artisan vendor:publish --provider="TarfinLabs\LaravelConfig\LaravelConfigServiceProvider"
+```
+Finally, you should run your database migrations:
+```
+php artisan migrate
+```
+## Documentation
+Simple usage example of laravel-config package in your Laravel app.
 
-## Usage
-
+Create new config parameter:
 ``` php
-// Create new config parameter
 $factory = new ConfigFactory();
 $configItem = $factory->setName('key')
     ->setType('boolean')
@@ -27,20 +33,31 @@ $configItem = $factory->setName('key')
     ->get();
 
 LaravelConfig::create($configItem);
+```
 
-// Get the value of given config paramter
+Get value with config name:
+``` php
 LaravelConfig::get('key');
+```
 
-// Set a value to given config parameter
+Set value with config name and value:
+``` php
 LaravelConfig::set('key', 'value');
+```
 
-// Get all config parameters
+
+Get all config parameters:
+``` php
 LaravelConfig::all();
+```
 
-// Check if the config parameter is exist
+Check if the config exists:
+``` php
 LaravelConfig::has('key');
+```
 
-// Update a config parameter record
+Update config with new values:
+``` php
 $factory = new ConfigFactory($configId);
 $configItem = $factory->setName('updated-key')
     ->setType('boolean')
@@ -49,8 +66,10 @@ $configItem = $factory->setName('updated-key')
     ->get();
 
 LaravelConfig::update($configItem);
+```
 
-// Remove given config parameter
+Remove config:
+``` php
 LaravelConfig::delete('key');
 ```
 
