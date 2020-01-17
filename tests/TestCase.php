@@ -30,7 +30,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function getEnvironmentSetUp($app): void
     {
-        include_once __DIR__.'/../database/migrations/create_config_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_laravel_config_table.php.stub';
 
         (new \CreateLaravelConfigTable)->up();
     }
