@@ -2,7 +2,6 @@
 
 namespace TarfinLabs\LaravelConfig;
 
-use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelConfigServiceProvider extends ServiceProvider
