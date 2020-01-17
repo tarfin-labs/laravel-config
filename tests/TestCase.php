@@ -9,6 +9,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->withFactories(__DIR__.'/../src/factories');
     }
 
     /**

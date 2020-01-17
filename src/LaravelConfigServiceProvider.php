@@ -42,12 +42,5 @@ class LaravelConfigServiceProvider extends ServiceProvider
         $this->app->singleton('laravel-config', function () {
             return new LaravelConfig;
         });
-
-        $this->registerEloquentFactoriesFrom(__DIR__.'/../src/factories');
-    }
-
-    public function registerEloquentFactoriesFrom($path)
-    {
-        $this->app->make(Factory::class)->load($path);
     }
 }
