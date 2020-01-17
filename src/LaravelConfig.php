@@ -17,7 +17,7 @@ class LaravelConfig
      */
     public function get(string $name, $default = null)
     {
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             return $default;
         }
 
@@ -36,7 +36,7 @@ class LaravelConfig
      */
     public function set(string $name, $value)
     {
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             return;
         }
 

@@ -18,7 +18,7 @@ class ConfigFactory
     {
         $this->configItem = new ConfigItem();
 
-        if (!is_null($config)) {
+        if (! is_null($config)) {
             $this->setName($config->name)
                  ->setValue($config->val)
                  ->setType($config->type)
