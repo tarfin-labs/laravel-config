@@ -20,16 +20,16 @@ class LaravelConfigServiceProvider extends ServiceProvider
 
             //$this->publishes([
             //    __DIR__.'/../config/config.php' => config_path('laravel-config.php'),
-            //], 'config');
+            //], 'laravel-config');
 
             $this->publishes([
                 __DIR__.'/../database/factories/ConfigFactory.php' => database_path('factories/ConfigFactory.php'),
-            ], 'factories');
+            ], 'laravel-config-factories');
 
             if (! class_exists('CreateLaravelConfigTable')) {
                 $this->publishes([
                     __DIR__.'/../database/migrations/create_config_table.php.stub' => database_path('migrations/'.date('Y_m_d_His').'_create_config_table.php'),
-                ], 'migrations');
+                ], 'laravel-config');
             }
         }
     }
