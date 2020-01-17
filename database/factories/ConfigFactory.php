@@ -1,8 +1,8 @@
 <?php
 
 use Faker\Generator as Faker;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\Carbon;
 use TarfinLabs\LaravelConfig\Config\Config;
 
 /* @var $factory Factory */

@@ -2,11 +2,11 @@
 
 namespace TarfinLabs\LaravelConfig\Tests;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use TarfinLabs\LaravelConfig\Config\Config;
-use TarfinLabs\LaravelConfig\LaravelConfig;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use TarfinLabs\LaravelConfig\LaravelConfig;
 
 class LaravelConfigTest extends TestCase
 {
@@ -151,5 +151,4 @@ class LaravelConfigTest extends TestCase
 
         $this->assertEquals(2, $response->count());
     }
-
 }
