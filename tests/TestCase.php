@@ -9,13 +9,16 @@ class TestCase extends \Orchestra\Testbench\TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->withFactories(__DIR__.'/../database/factories');
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
+     *
      * @return array
      */
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             LaravelConfigServiceProvider::class,
@@ -23,12 +26,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
-        include_once __DIR__.'/../database/migrations/2020_01_14_152443_create_config_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_laravel_config_table.php.stub';
 
-        (new \CreateConfigTable)->up();
+        (new \CreateLaravelConfigTable)->up();
     }
 }

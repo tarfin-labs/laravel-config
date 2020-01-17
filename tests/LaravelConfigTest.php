@@ -23,37 +23,37 @@ class LaravelConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_create_a_new_config_parameter()
+    public function it_create_a_new_config_parameter(): void
     {
         $factory = new ConfigFactory();
         $configItem = $factory->setName(Str::random(5))
-            ->setType('boolean')
-            ->setValue('1')
-            ->setDescription(Str::random(50))
-            ->get();
+                              ->setType('boolean')
+                              ->setValue('1')
+                              ->setDescription(Str::random(50))
+                              ->get();
 
         $this->laravelConfig->create($configItem);
 
         $this->assertDatabaseHas('config', [
-            'name' => $configItem->name,
-            'val' => $configItem->val,
-            'type' => $configItem->type,
+            'name'        => $configItem->name,
+            'val'         => $configItem->val,
+            'type'        => $configItem->type,
             'description' => $configItem->description,
         ]);
     }
 
     /** @test */
-    public function it_does_not_create_a_config_parameter_with_the_same_name()
+    public function it_does_not_create_a_config_parameter_with_the_same_name(): void
     {
         $config = factory(Config::class)->create();
         $this->assertDatabaseHas('config', ['name' => $config->name]);
 
         $factory = new ConfigFactory();
         $configItem = $factory->setName($config->name)
-            ->setType('boolean')
-            ->setValue('1')
-            ->setDescription(Str::random(50))
-            ->get();
+                              ->setType('boolean')
+                              ->setValue('1')
+                              ->setDescription(Str::random(50))
+                              ->get();
 
         $response = $this->laravelConfig->create($configItem);
 
@@ -61,29 +61,29 @@ class LaravelConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_updates_existing_config_parameter()
+    public function it_updates_existing_config_parameter(): void
     {
         $config = factory(Config::class)->create(['val' => '0']);
         $this->assertDatabaseHas('config', ['name' => $config->name, 'val' => $config->val]);
 
         $factory = new ConfigFactory($config);
         $configItem = $factory->setType('boolean')
-            ->setValue('0')
-            ->setDescription('updated-description')
-            ->get();
+                              ->setValue('0')
+                              ->setDescription('updated-description')
+                              ->get();
 
         $this->laravelConfig->update($config, $configItem);
 
         $this->assertDatabaseHas('config', [
-            'name' => $config->name,
-            'val' => $configItem->val,
-            'type' => $configItem->type,
+            'name'        => $config->name,
+            'val'         => $configItem->val,
+            'type'        => $configItem->type,
             'description' => $configItem->description,
         ]);
     }
 
     /** @test */
-    public function it_deletes_an_existing_config_parameter()
+    public function it_deletes_an_existing_config_parameter(): void
     {
         $name = 'dummy-name';
         $config = factory(Config::class)->create(['name' => $name]);
@@ -95,7 +95,7 @@ class LaravelConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_sets_a_value_to_existing_config_parameter()
+    public function it_sets_a_value_to_existing_config_parameter(): void
     {
         $config = factory(Config::class)->create(['val' => '1']);
 
@@ -105,7 +105,7 @@ class LaravelConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_set_a_value_to_not_existing_config_parameter()
+    public function it_does_not_set_a_value_to_not_existing_config_parameter(): void
     {
         $response = $this->laravelConfig->set('dummy', '1');
 
@@ -113,7 +113,7 @@ class LaravelConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_a_config_parameter_value_by_given_name()
+    public function it_returns_a_config_parameter_value_by_given_name(): void
     {
         $config = factory(Config::class)->create();
 
@@ -123,7 +123,7 @@ class LaravelConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_return_a_not_existing_config_parameter()
+    public function it_does_not_return_a_not_existing_config_parameter(): void
     {
         $response = $this->laravelConfig->get('dummy');
 
@@ -131,7 +131,7 @@ class LaravelConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_if_a_config_parameter_is_exist()
+    public function it_returns_if_a_config_parameter_is_exist(): void
     {
         $name = 'dummy';
         $response = $this->laravelConfig->has($name);
@@ -143,7 +143,7 @@ class LaravelConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_all_config_parameters()
+    public function it_returns_all_config_parameters(): void
     {
         factory(Config::class)->times(2)->create();
 

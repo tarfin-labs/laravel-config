@@ -6,24 +6,40 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/tarfin-labs/laravel-config.svg?style=flat-square)](https://packagist.org/packages/tarfin-labs/laravel-config)
 
 ## Introduction
+
 Laravel config provides a simple configuration system for your Laravel application. 
+
 ## Installation
+
 You can install the package via composer:
+
 ```bash
 composer require tarfin-labs/laravel-config
 ```
-Next, you should publish the Laravel migration files using the vendor:publish Artisan command.
+Next, you should publish the Laravel config migration file using the vendor:publish Artisan command.
+
 ```
-php artisan vendor:publish --provider="TarfinLabs\LaravelConfig\LaravelConfigServiceProvider"
+php artisan vendor:publish --provider="TarfinLabs\LaravelConfig\LaravelConfigServiceProvider" --tag="laravel-config"
 ```
+
+If you want to use Laravel Config database factory, you can publish it too, using the command:
+
+```
+php artisan vendor:publish --provider="TarfinLabs\LaravelConfig\LaravelConfigServiceProvider" --tag="laravel-config-factories"
+```
+
 Finally, you should run your database migrations:
+
 ```
 php artisan migrate
 ```
+
 ## Documentation
+
 Simple usage example of laravel-config package in your Laravel app.
 
 Create new config parameter:
+
 ``` php
 $factory = new ConfigFactory();
 $configItem = $factory->setName('key')
@@ -36,27 +52,31 @@ LaravelConfig::create($configItem);
 ```
 
 Get value with config name:
+
 ``` php
 LaravelConfig::get('key');
 ```
 
 Set value with config name and value:
+
 ``` php
 LaravelConfig::set('key', 'value');
 ```
 
-
 Get all config parameters:
+
 ``` php
 LaravelConfig::all();
 ```
 
 Check if the config exists:
+
 ``` php
 LaravelConfig::has('key');
 ```
 
 Update config with new values:
+
 ``` php
 $factory = new ConfigFactory($configId);
 $configItem = $factory->setName('updated-key')
@@ -69,6 +89,7 @@ LaravelConfig::update($configItem);
 ```
 
 Remove config:
+
 ``` php
 LaravelConfig::delete('key');
 ```

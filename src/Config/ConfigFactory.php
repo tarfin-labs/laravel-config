@@ -12,7 +12,7 @@ class ConfigFactory
     /**
      * ConfigFactory constructor.
      *
-     * @param Config|null $config
+     * @param  Config|null  $config
      */
     public function __construct(Config $config = null)
     {
@@ -20,16 +20,17 @@ class ConfigFactory
 
         if (! is_null($config)) {
             $this->setName($config->name)
-                ->setValue($config->val)
-                ->setType($config->type)
-                ->setDescription($config->description);
+                 ->setValue($config->val)
+                 ->setType($config->type)
+                 ->setDescription($config->description);
         }
     }
 
     /**
      * Set the name of config paremeter.
      *
-     * @param string $name
+     * @param  string  $name
+     *
      * @return $this
      */
     public function setName(string $name): self
@@ -43,6 +44,7 @@ class ConfigFactory
      * Set the value of config parameter.
      *
      * @param $value
+     *
      * @return $this
      */
     public function setValue($value): self
@@ -56,6 +58,7 @@ class ConfigFactory
      * Set the type of config parameter.
      *
      * @param $type
+     *
      * @return $this
      */
     public function setType($type): self
@@ -69,6 +72,7 @@ class ConfigFactory
      * Set the description of config parameter.
      *
      * @param $description
+     *
      * @return $this
      */
     public function setDescription($description): self
