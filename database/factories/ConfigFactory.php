@@ -9,7 +9,7 @@ use TarfinLabs\LaravelConfig\Config\Config;
 
 $factory->define(Config::class, function (Faker $faker, array $attributes = []) {
     return [
-        'name'        => $attributes['name'] ?? $faker->word(),
+        'name'        => $attributes['name'] ?? $faker->word().$faker->asciify('*****'),
         'type'        => $attributes['type'] ?? $faker->randomElement(['boolean', 'text']),
         'val'         => $attributes['val'] ?? $faker->word(),
         'description' => $faker->realText('50'),
