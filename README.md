@@ -94,6 +94,43 @@ Remove config:
 LaravelConfig::delete('key');
 ```
 
+### Helpers
+You can also use helper functions:
+
+``` php
+// Creating config item
+$factory = new ConfigFactory();
+$configItem = $factory->setName('key')
+    ->setType('boolean')
+    ->setValue('1')
+    ->setDescription('Lorem ipsum dolor sit amet')
+    ->get();
+
+create_config($configItem);
+
+// Reading config item
+read_config('key');
+
+// Checking if the config item exists
+has_config('key');
+
+// Shortcut to update the value of config item
+set_config_value('key', 'value');
+
+// Updating config item
+$factory = new ConfigFactory($configId);
+$configItem = $factory->setName('updated-key')
+    ->setType('boolean')
+    ->setValue('0')
+    ->setDescription('updated description')
+    ->get();
+
+update_config($configItem);
+
+// Removing config item
+delete_config('key');
+```
+
 ### Testing
 
 ``` bash
