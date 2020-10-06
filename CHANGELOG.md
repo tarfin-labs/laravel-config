@@ -3,7 +3,7 @@ All notable changes to `laravel-config` will be documented in this file.
 
 ## [Unreleased]
 
-## [2.1.0] - 2020-10-06
+## [3.0.0] - 2020-10-06
 
 - 2020-10-06: Laravel config now compatible with Laravel 8.
 
