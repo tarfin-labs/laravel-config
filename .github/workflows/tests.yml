@@ -17,13 +17,15 @@ jobs:
 
         steps:
             -   name: Checkout the code
-                uses: actions/checkout@v1
+                uses: actions/checkout@v2
 
-            -   name: Disable Xdebug
-                run: sudo phpdismod xdebug
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
 
             -   name: Install dependencies
-                run: composer install --no-progress --no-ansi --profile --no-interaction --no-scripts --no-suggest --prefer-dist
+                run: composer install --no-progress --no-ansi --profile --no-interaction --no-scripts --prefer-dist
 
             -   name: Execute tests
                 env:
