@@ -33,6 +33,19 @@ if (! function_exists('read_config')) {
     }
 }
 
+if (! function_exists('read_nested')) {
+    /**
+     * Read nested config items by given namespace.
+     *
+     * @param string|null $key
+     * @return mixed
+     */
+    function read_nested(string $key)
+    {
+        return app('laravel-config')->getNested($key);
+    }
+}
+
 if (! function_exists('update_config')) {
     /**
      * Update given config item by given data.

@@ -94,6 +94,42 @@ Remove config:
 LaravelConfig::delete('key');
 ```
 
+### Nested Parameters
+
+Let's say you have a config parameters named `foo.bar` and `foo.baz`. You can get all parameters under `foo` namespace using `getNested()` method.
+
+#### Usage:
+
+```php
+LaravelConfig::getNested('foo');
+```
+
+#### Output: `Illuminate\Support\Collection`
+```php
+=> Illuminate\Support\Collection {#3048
+     all: [
+       TarfinLabs\LaravelConfig\Config\Config {#3097
+         id: 1,
+         name: "bar",
+         type: "boolean",
+         val: "0",
+         description: null,
+         created_at: "2021-05-06 11:35:05",
+         updated_at: "2021-05-06 11:35:05",
+       },
+       TarfinLabs\LaravelConfig\Config\Config {#3099
+         id: 2,
+         name: "baz",
+         type: "boolean",
+         val: "1",
+         description: null,
+         created_at: "2021-05-06 11:03:48",
+         updated_at: "2021-05-06 11:03:48",
+       },
+     ],
+   }
+```
+
 ### Helpers
 You can also use helper functions:
 
@@ -129,6 +165,9 @@ update_config($configItem);
 
 // Removing config item
 delete_config('key');
+
+// Reading nested config items
+read_nested('foo.bar');
 ```
 
 ### Testing

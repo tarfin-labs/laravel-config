@@ -2,6 +2,7 @@
 
 namespace TarfinLabs\LaravelConfig;
 
+use Illuminate\Support\Collection;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigItem;
 
@@ -24,6 +25,33 @@ class LaravelConfig
         $config = Config::where('name', $name)->first();
 
         return $config->val;
+    }
+
+    /**
+     * Get nested config params.
+     *
+     * @param string $namespace
+     * @return Collection
+     */
+    public function getNested(string $namespace): Collection
+    {
+        $params = Config::where('name', 'LIKE', "{$namespace}.%")->get();
+
+        $config = collect();
+
+        foreach ($params as $param) {
+            $keys 	= explode('.', str_replace("{$namespace}.", '', $param->name));
+            $name = '';
+
+            foreach($keys as $key) {
+                $name .= $key.'.';
+            }
+
+            $param->name = rtrim($name, '.');
+            $config->push($param);
+        }
+
+        return $config;
     }
 
     /**
