@@ -40,10 +40,10 @@ class LaravelConfig
         $config = collect();
 
         foreach ($params as $param) {
-            $keys 	= explode('.', str_replace("{$namespace}.", '', $param->name));
+            $keys = explode('.', str_replace("{$namespace}.", '', $param->name));
             $name = '';
 
-            foreach($keys as $key) {
+            foreach ($keys as $key) {
                 $name .= $key.'.';
             }
 
