@@ -12,7 +12,7 @@ class LaravelConfig
      * Get config by given name.
      *
      * @param  string  $name
-     * @param          $default
+     * @param  $default
      *
      * @return mixed
      */
