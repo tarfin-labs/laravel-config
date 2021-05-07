@@ -3,9 +3,10 @@ All notable changes to `laravel-config` will be documented in this file.
 
 ## [Unreleased]
 
-## [3.1.0] - 2021-05-06
+## [4.0.0] - 2021-05-06
 
 - 2021-05-06: `getNested()` method added for getting nested config params.
+- 2021-05-07: Dropped support for php 7.2, 7.3 and Laravel 6.x, 7.x
 
 ## [3.0.0] - 2020-10-06
 
