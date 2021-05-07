@@ -151,4 +151,24 @@ class LaravelConfigTest extends TestCase
 
         $this->assertEquals(2, $response->count());
     }
+
+    /** @test */
+    public function it_returns_nested_config_parameters(): void
+    {
+        factory(Config::class)->create([
+            'name'  => 'foo.bar',
+            'val'   => true,
+        ]);
+
+        factory(Config::class)->create([
+            'name'  => 'foo.baz',
+            'val'   => false,
+        ]);
+
+        $response = $this->laravelConfig->getNested('foo');
+
+        $this->assertEquals(2, $response->count());
+        $this->assertEquals('bar', $response->first()->name);
+        $this->assertEquals('baz', $response->last()->name);
+    }
 }
