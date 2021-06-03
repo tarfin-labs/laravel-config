@@ -3,6 +3,10 @@ All notable changes to `laravel-config` will be documented in this file.
 
 ## [Unreleased]
 
+## [4.1.0] - 2021-06-03
+
+- PHP 8 support added.
+
 ## [4.0.0] - 2021-05-06
 
 - 2021-05-06: `getNested()` method added for getting nested config params.
