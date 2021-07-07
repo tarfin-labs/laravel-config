@@ -3,6 +3,10 @@ All notable changes to `laravel-config` will be documented in this file.
 
 ## [Unreleased]
 
+## [4.2.0] - 2021-07-07
+
+- Tags feature added.
+
 ## [4.1.0] - 2021-06-03
 
 - PHP 8 support added.

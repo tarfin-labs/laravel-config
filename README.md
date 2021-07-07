@@ -45,6 +45,7 @@ $factory = new ConfigFactory();
 $configItem = $factory->setName('key')
     ->setType('boolean')
     ->setValue('1')
+    ->setTags(['system'])//optional
     ->setDescription('Lorem ipsum dolor sit amet')
     ->get();
 
@@ -56,7 +57,6 @@ Get value with config name:
 ``` php
 LaravelConfig::get('key');
 ```
-
 Set value with config name and value:
 
 ``` php
@@ -67,6 +67,12 @@ Get all config parameters:
 
 ``` php
 LaravelConfig::all();
+```
+
+Get config items by tag:
+
+``` php
+LaravelConfig::getByTag('key');
 ```
 
 Check if the config exists:
@@ -82,6 +88,7 @@ $factory = new ConfigFactory($configId);
 $configItem = $factory->setName('updated-key')
     ->setType('boolean')
     ->setValue('0')
+    ->setTags(['system'])//optional
     ->setDescription('updated description')
     ->get();
 
@@ -139,6 +146,7 @@ $factory = new ConfigFactory();
 $configItem = $factory->setName('key')
     ->setType('boolean')
     ->setValue('1')
+    ->setTags(['system'])//optional
     ->setDescription('Lorem ipsum dolor sit amet')
     ->get();
 
@@ -157,6 +165,7 @@ set_config_value('key', 'value');
 $factory = new ConfigFactory($configId);
 $configItem = $factory->setName('updated-key')
     ->setType('boolean')
+    ->setTags(['system'])//optional
     ->setValue('0')
     ->setDescription('updated description')
     ->get();

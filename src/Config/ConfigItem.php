@@ -15,4 +15,7 @@ class ConfigItem
 
     /** @var string|null */
     public $description = null;
+
+    /** @var array */
+    public $tags = [];
 }

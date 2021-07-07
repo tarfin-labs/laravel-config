@@ -2,7 +2,6 @@
 
 namespace TarfinLabs\LaravelConfig\Tests;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
@@ -10,8 +9,6 @@ use TarfinLabs\LaravelConfig\LaravelConfig;
 
 class LaravelConfigTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @var LaravelConfig */
     protected $laravelConfig;
 
@@ -40,6 +37,29 @@ class LaravelConfigTest extends TestCase
             'type'        => $configItem->type,
             'description' => $configItem->description,
         ]);
+    }
+
+    /** @test */
+    public function it_create_a_new_config_parameter_with_tag(): void
+    {
+        $factory = new ConfigFactory();
+        $configItem = $factory->setName(Str::random(5))
+            ->setType('boolean')
+            ->setValue('1')
+            ->setTags(['system'])
+            ->setDescription(Str::random(50))
+            ->get();
+
+        $this->laravelConfig->create($configItem);
+
+        $this->assertDatabaseHas('config', [
+            'name'        => $configItem->name,
+            'val'         => $configItem->val,
+            'type'        => $configItem->type,
+            'description' => $configItem->description,
+        ]);
+
+        $this->assertTrue($this->laravelConfig->getByTag(['system'])->count() > 0);
     }
 
     /** @test */
@@ -120,6 +140,21 @@ class LaravelConfigTest extends TestCase
         $response = $this->laravelConfig->get($config->name);
 
         $this->assertEquals($config->val, $response);
+    }
+
+    /** @test */
+    public function it_returns_config_collection_by_tag_name(): void
+    {
+        factory(Config::class, 3)
+            ->create();
+
+        $config = factory(Config::class, 5)->create([
+            'tags' => ['system'],
+        ]);
+
+        $response = $this->laravelConfig->getByTag(['system']);
+
+        $this->assertEquals($config->count(), $response->count());
     }
 
     /** @test */

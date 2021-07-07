@@ -13,7 +13,7 @@ class CreateLaravelConfigTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('config', function (Blueprint $table) {
+       Schema::create('config', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->enum('type', ['boolean', 'text'])->default('boolean');

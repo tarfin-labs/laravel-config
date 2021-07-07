@@ -22,6 +22,7 @@ class ConfigFactory
             $this->setName($config->name)
                  ->setValue($config->val)
                  ->setType($config->type)
+                 ->setTags($config->tags)
                  ->setDescription($config->description);
         }
     }
@@ -78,6 +79,20 @@ class ConfigFactory
     public function setDescription($description): self
     {
         $this->configItem->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Set the tags of config parameter.
+     *
+     * @param $tags
+     *
+     * @return $this
+     */
+    public function setTags($tags): self
+    {
+        $this->configItem->tags = $tags;
 
         return $this;
     }

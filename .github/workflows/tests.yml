@@ -7,13 +7,26 @@ jobs:
 
         runs-on: ubuntu-latest
         strategy:
-            fail-fast: true
+            fail-fast: false
             matrix:
                 php: [7.4, 8.0]
                 laravel: [8.*]
                 dependency-version: [prefer-lowest, prefer-stable]
+                include:
+                    -   laravel: 8.*
+                        testbench: 6.*
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
+
+        services:
+            mysql:
+                image: mysql:8.0
+                env:
+                    MYSQL_ALLOW_EMPTY_PASSWORD: yes
+                    MYSQL_DATABASE: laravel_config
+                ports:
+                    - 3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
         steps:
             -   name: Checkout the code
@@ -23,12 +36,18 @@ jobs:
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
+                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, mysql, mysqli, pdo_mysql, bcmath, soap, intl, gd, exif, iconv, imagick
+                    coverage: none
 
             -   name: Install dependencies
                 run: composer install --no-progress --no-ansi --profile --no-interaction --no-scripts --prefer-dist
 
+            -   name: Start database server
+                run: sudo /etc/init.d/mysql start
+
             -   name: Execute tests
                 env:
-                    DB_CONNECTION: sqlite
-                    DB_DATABASE: ":memory:"
+                    DB_CONNECTION: mysql
+                    DB_DATABASE: laravel_config
+                    DB_PORT: ${{ job.services.mysql.ports[3306] }}
                 run: vendor/bin/phpunit --testdox --colors=always --exclude-group skipped

@@ -11,7 +11,7 @@ class LaravelConfig
     /**
      * Get config by given name.
      *
-     * @param  string  $name
+     * @param string $name
      * @param  $default
      *
      * @return mixed
@@ -55,9 +55,22 @@ class LaravelConfig
     }
 
     /**
+     * @param $tags
+     * @return Collection
+     */
+    public function getByTag($tags): ?Collection
+    {
+        if (! is_array($tags)) {
+            $tags = [$tags];
+        }
+
+        return Config::whereJsonContains('tags', $tags)->get();
+    }
+
+    /**
      * Set config with given data.
      *
-     * @param  string  $name
+     * @param string $name
      * @param          $value
      *
      * @return mixed
@@ -79,7 +92,7 @@ class LaravelConfig
     /**
      * Check whether a config parameter is set.
      *
-     * @param  string  $name
+     * @param string $name
      *
      * @return bool
      */
@@ -101,7 +114,7 @@ class LaravelConfig
     /**
      * Create a new config parameter.
      *
-     * @param  ConfigItem  $configItem
+     * @param ConfigItem $configItem
      *
      * @return bool
      */
@@ -119,8 +132,8 @@ class LaravelConfig
     /**
      * Update config paremeter.
      *
-     * @param  Config      $config
-     * @param  ConfigItem  $configItem
+     * @param Config $config
+     * @param ConfigItem $configItem
      *
      * @return mixed
      */
@@ -132,7 +145,7 @@ class LaravelConfig
     /**
      * Delete config parameter.
      *
-     * @param  Config  $config
+     * @param Config $config
      *
      * @return int
      */
@@ -144,8 +157,8 @@ class LaravelConfig
     /**
      * Fill config paremeter columns.
      *
-     * @param  Config      $config
-     * @param  ConfigItem  $configItem
+     * @param Config $config
+     * @param ConfigItem $configItem
      *
      * @return Config
      */
@@ -155,6 +168,7 @@ class LaravelConfig
         $config->val = $configItem->val;
         $config->type = $configItem->type;
         $config->description = $configItem->description;
+        $config->tags = $configItem->tags;
 
         return $config;
     }
