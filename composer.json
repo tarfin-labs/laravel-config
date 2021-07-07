@@ -32,12 +32,13 @@
     ],
     "require": {
         "php": "^7.4 || ^8.0",
-        "illuminate/support": "^8.12",
-        "laravel/legacy-factories": "^1.0"
+        "laravel/framework": "^8.0",
+        "laravel/legacy-factories": "^1.0",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^9.3"
     },
     "autoload": {
         "files": [
