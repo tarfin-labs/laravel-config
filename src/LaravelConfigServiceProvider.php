@@ -31,6 +31,12 @@ class LaravelConfigServiceProvider extends ServiceProvider
                     __DIR__.'/../database/migrations/create_laravel_config_table.php.stub' => database_path('migrations/'.date('Y_m_d_His').'_create_laravel_config_table.php'),
                 ], 'laravel-config');
             }
+
+            if (! class_exists('AddTagsColumnToConfigTable')) {
+                $this->publishes([
+                    __DIR__.'/../database/migrations/add_tags_column_to_config_table.php.stub' => database_path('migrations/'.date('Y_m_d_His').'_add_tags_column_to_laravel_config_table.php'),
+                ], 'laravel-config');
+            }
         }
     }
 

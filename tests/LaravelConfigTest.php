@@ -43,6 +43,29 @@ class LaravelConfigTest extends TestCase
     }
 
     /** @test */
+    public function it_create_a_new_config_parameter_with_tag(): void
+    {
+        $factory = new ConfigFactory();
+        $configItem = $factory->setName(Str::random(5))
+            ->setType('boolean')
+            ->setValue('1')
+            ->setTags(['system'])
+            ->setDescription(Str::random(50))
+            ->get();
+
+        $this->laravelConfig->create($configItem);
+
+        $this->assertDatabaseHas('config', [
+            'name'        => $configItem->name,
+            'val'         => $configItem->val,
+            'type'        => $configItem->type,
+            'description' => $configItem->description,
+        ]);
+
+        $this->assertTrue($this->laravelConfig->getByTag(['system'])->count() > 0);
+    }
+
+    /** @test */
     public function it_does_not_create_a_config_parameter_with_the_same_name(): void
     {
         $config = factory(Config::class)->create();
@@ -120,6 +143,21 @@ class LaravelConfigTest extends TestCase
         $response = $this->laravelConfig->get($config->name);
 
         $this->assertEquals($config->val, $response);
+    }
+
+    /** @test */
+    public function it_returns_config_collection_by_tag_name(): void
+    {
+        factory(Config::class,3)
+            ->create();
+
+        $config = factory(Config::class,5)->create([
+            'tags' => json_encode(['system'])
+        ]);
+
+        $response = $this->laravelConfig->getByTag(['system']);
+
+        $this->assertEquals($config->count(), $response->count());
     }
 
     /** @test */

@@ -11,6 +11,17 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
 
         $this->withFactories(__DIR__.'/../database/factories');
+
+        include_once __DIR__.'/../database/migrations/create_laravel_config_table.php.stub';
+        include_once __DIR__.'/../database/migrations/add_tags_column_to_config_table.php.stub';
+
+        (new \CreateLaravelConfigTable)->down();
+        (new \CreateLaravelConfigTable)->up();
+
+        (new \AddTagsColumnToConfigTable)->down();
+        (new \AddTagsColumnToConfigTable)->up();
+
+
     }
 
     /**
@@ -30,8 +41,5 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function getEnvironmentSetUp($app): void
     {
-        include_once __DIR__.'/../database/migrations/create_laravel_config_table.php.stub';
-
-        (new \CreateLaravelConfigTable)->up();
     }
 }

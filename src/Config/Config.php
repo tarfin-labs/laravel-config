@@ -10,5 +10,5 @@ class Config extends Model
 
     protected $guarded = [];
 
-    protected $fillable = ['name', 'val', 'type', 'description'];
+    protected $fillable = ['name', 'val', 'type', 'description', 'tags'];
 }
