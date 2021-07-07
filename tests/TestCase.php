@@ -28,8 +28,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
         ];
     }
 
-    protected function setUpDatabase($app){
-
+    protected function setUpDatabase($app)
+    {
         Schema::dropAllTables();
 
         include_once __DIR__.'/../database/migrations/create_laravel_config_table.php.stub';
