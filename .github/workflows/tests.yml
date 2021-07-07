@@ -10,7 +10,7 @@ jobs:
             fail-fast: true
             matrix:
                 php: [7.4, 8.0]
-                laravel: [8.0]
+                laravel: [8.*]
                 dependency-version: [prefer-lowest, prefer-stable]
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
@@ -36,9 +36,11 @@ jobs:
                     extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, mysql, mysqli, pdo_mysql, bcmath, soap, intl, gd, exif, iconv, imagick
 
             -   name: Install dependencies
-                run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+                run: composer install --no-progress --no-ansi --profile --no-interaction --no-scripts --prefer-dist
 
             -   name: Execute tests
                 env:
+                    DB_CONNECTION: mysql
+                    DB_DATABASE: laravel_config
                     DB_PORT: ${{ job.services.mysql.ports[3306] }}
                 run: vendor/bin/phpunit --testdox --colors=always --exclude-group skipped
