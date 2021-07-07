@@ -97,7 +97,6 @@ class ConfigFactory
         return $this;
     }
 
-
     /**
      * return ConfigItem.
      *

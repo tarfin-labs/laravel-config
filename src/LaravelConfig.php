@@ -18,7 +18,7 @@ class LaravelConfig
      */
     public function get(string $name, $default = null)
     {
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             return $default;
         }
 
@@ -44,7 +44,7 @@ class LaravelConfig
             $name = '';
 
             foreach ($keys as $key) {
-                $name .= $key . '.';
+                $name .= $key.'.';
             }
 
             $param->name = rtrim($name, '.');
@@ -60,13 +60,12 @@ class LaravelConfig
      */
     public function getByTag($tags): ?Collection
     {
-        if (!is_array($tags)) {
+        if (! is_array($tags)) {
             $tags = [$tags];
         }
 
         return Config::whereJsonContains('tags', $tags)->get();
     }
-
 
     /**
      * Set config with given data.
@@ -78,7 +77,7 @@ class LaravelConfig
      */
     public function set(string $name, $value)
     {
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             return;
         }
 

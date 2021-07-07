@@ -13,7 +13,7 @@ $factory->define(Config::class, function (Faker $faker, array $attributes = []) 
         'type'        => $attributes['type'] ?? $faker->randomElement(['boolean', 'text']),
         'val'         => $attributes['val'] ?? $faker->word(),
         'description' => $faker->realText('50'),
-        'tags'        => $attributes['tags'] ?? json_encode([$faker->randomElement(['admin','blog', 'global'])]),
+        'tags'        => $attributes['tags'] ?? json_encode([$faker->randomElement(['admin', 'blog', 'global'])]),
         'created_at'  => Carbon::now(),
         'updated_at'  => Carbon::now(),
     ];
