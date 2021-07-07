@@ -2,7 +2,7 @@
 
 namespace TarfinLabs\LaravelConfig\Tests;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Str;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
@@ -10,7 +10,7 @@ use TarfinLabs\LaravelConfig\LaravelConfig;
 
 class LaravelConfigTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     /** @var LaravelConfig */
     protected $laravelConfig;
