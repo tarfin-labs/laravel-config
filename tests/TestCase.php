@@ -35,11 +35,4 @@ class TestCase extends \Orchestra\Testbench\TestCase
             LaravelConfigServiceProvider::class,
         ];
     }
-
-    /**
-     * @param  \Illuminate\Foundation\Application  $app
-     */
-    protected function getEnvironmentSetUp($app): void
-    {
-    }
 }

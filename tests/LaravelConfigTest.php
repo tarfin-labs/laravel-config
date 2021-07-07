@@ -152,7 +152,7 @@ class LaravelConfigTest extends TestCase
             ->create();
 
         $config = factory(Config::class,5)->create([
-            'tags' => json_encode(['system'])
+            'tags' => ['system']
         ]);
 
         $response = $this->laravelConfig->getByTag(['system']);

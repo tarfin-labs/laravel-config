@@ -169,7 +169,7 @@ class LaravelConfig
         $config->val = $configItem->val;
         $config->type = $configItem->type;
         $config->description = $configItem->description;
-        $config->tags = json_encode($configItem->tags);
+        $config->tags = $configItem->tags;
 
         return $config;
     }
