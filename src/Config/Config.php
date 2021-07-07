@@ -13,6 +13,6 @@ class Config extends Model
     protected $fillable = ['name', 'val', 'type', 'description', 'tags'];
 
     protected $casts = [
-        'tags' => 'array'
+        'tags' => 'array',
     ];
 }

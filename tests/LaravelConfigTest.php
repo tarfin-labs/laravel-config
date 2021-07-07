@@ -151,8 +151,8 @@ class LaravelConfigTest extends TestCase
         factory(Config::class, 3)
             ->create();
 
-        $config = factory(Config::class,5)->create([
-            'tags' => ['system']
+        $config = factory(Config::class, 5)->create([
+            'tags' => ['system'],
         ]);
 
         $response = $this->laravelConfig->getByTag(['system']);
