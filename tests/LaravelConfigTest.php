@@ -148,7 +148,7 @@ class LaravelConfigTest extends TestCase
     /** @test */
     public function it_returns_config_collection_by_tag_name(): void
     {
-        factory(Config::class,3)
+        factory(Config::class, 3)
             ->create();
 
         $config = factory(Config::class,5)->create([

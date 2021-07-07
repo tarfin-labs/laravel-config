@@ -20,8 +20,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
         (new \AddTagsColumnToConfigTable)->down();
         (new \AddTagsColumnToConfigTable)->up();
-
-
     }
 
     /**
