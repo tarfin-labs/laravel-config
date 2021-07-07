@@ -40,8 +40,7 @@ jobs:
                     coverage: none
 
             -   name: Install dependencies
-                run: |
-                    composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+                run: composer install --no-progress --no-ansi --profile --no-interaction --no-scripts --prefer-dist
 
             -   name: Start database server
                 run: sudo /etc/init.d/mysql start
