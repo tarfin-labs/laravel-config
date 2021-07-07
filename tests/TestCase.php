@@ -2,6 +2,7 @@
 
 namespace TarfinLabs\LaravelConfig\Tests;
 
+use Illuminate\Support\Facades\Schema;
 use TarfinLabs\LaravelConfig\LaravelConfigServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -12,14 +13,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
         $this->withFactories(__DIR__.'/../database/factories');
 
-        include_once __DIR__.'/../database/migrations/create_laravel_config_table.php.stub';
-        include_once __DIR__.'/../database/migrations/add_tags_column_to_config_table.php.stub';
-
-        (new \CreateLaravelConfigTable)->down();
-        (new \CreateLaravelConfigTable)->up();
-
-        (new \AddTagsColumnToConfigTable)->down();
-        (new \AddTagsColumnToConfigTable)->up();
+        $this->setUpDatabase($this->app);
     }
 
     /**
@@ -32,5 +26,16 @@ class TestCase extends \Orchestra\Testbench\TestCase
         return [
             LaravelConfigServiceProvider::class,
         ];
+    }
+
+    protected function setUpDatabase($app){
+
+        Schema::dropAllTables();
+
+        include_once __DIR__.'/../database/migrations/create_laravel_config_table.php.stub';
+        include_once __DIR__.'/../database/migrations/add_tags_column_to_config_table.php.stub';
+
+        (new \CreateLaravelConfigTable)->up();
+        (new \AddTagsColumnToConfigTable)->up();
     }
 }
