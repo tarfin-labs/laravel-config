@@ -17,7 +17,6 @@ class LaravelConfigServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         if ($this->app->runningInConsole()) {
-
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('laravel-config.php'),
             ], 'laravel-config');
