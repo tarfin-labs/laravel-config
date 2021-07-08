@@ -31,7 +31,7 @@ class LaravelConfigTest extends TestCase
 
         $this->laravelConfig->create($configItem);
 
-        $this->assertDatabaseHas('config', [
+        $this->assertDatabaseHas(config('laravel-config.table'), [
             'name'        => $configItem->name,
             'val'         => $configItem->val,
             'type'        => $configItem->type,
@@ -52,7 +52,7 @@ class LaravelConfigTest extends TestCase
 
         $this->laravelConfig->create($configItem);
 
-        $this->assertDatabaseHas('config', [
+        $this->assertDatabaseHas(config('laravel-config.table'), [
             'name'        => $configItem->name,
             'val'         => $configItem->val,
             'type'        => $configItem->type,
@@ -66,7 +66,7 @@ class LaravelConfigTest extends TestCase
     public function it_does_not_create_a_config_parameter_with_the_same_name(): void
     {
         $config = factory(Config::class)->create();
-        $this->assertDatabaseHas('config', ['name' => $config->name]);
+        $this->assertDatabaseHas(config('laravel-config.table'), ['name' => $config->name]);
 
         $factory = new ConfigFactory();
         $configItem = $factory->setName($config->name)
@@ -84,7 +84,7 @@ class LaravelConfigTest extends TestCase
     public function it_updates_existing_config_parameter(): void
     {
         $config = factory(Config::class)->create(['val' => '0']);
-        $this->assertDatabaseHas('config', ['name' => $config->name, 'val' => $config->val]);
+        $this->assertDatabaseHas(config('laravel-config.table'), ['name' => $config->name, 'val' => $config->val]);
 
         $factory = new ConfigFactory($config);
         $configItem = $factory->setType('boolean')
@@ -94,7 +94,7 @@ class LaravelConfigTest extends TestCase
 
         $this->laravelConfig->update($config, $configItem);
 
-        $this->assertDatabaseHas('config', [
+        $this->assertDatabaseHas(config('laravel-config.table'), [
             'name'        => $config->name,
             'val'         => $configItem->val,
             'type'        => $configItem->type,
@@ -107,11 +107,11 @@ class LaravelConfigTest extends TestCase
     {
         $name = 'dummy-name';
         $config = factory(Config::class)->create(['name' => $name]);
-        $this->assertDatabaseHas('config', ['name' => $config->name]);
+        $this->assertDatabaseHas(config('laravel-config.table'), ['name' => $config->name]);
 
         $this->laravelConfig->delete($config);
 
-        $this->assertDatabaseMissing('config', ['name' => $name]);
+        $this->assertDatabaseMissing(config('laravel-config.table'), ['name' => $name]);
     }
 
     /** @test */

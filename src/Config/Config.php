@@ -15,4 +15,10 @@ class Config extends Model
     protected $casts = [
         'tags' => 'array',
     ];
+
+    public function __construct($attributes = [])
+    {
+        $this->setTable(config('laravel-config.table'));
+        parent::__construct($attributes);
+    }
 }
