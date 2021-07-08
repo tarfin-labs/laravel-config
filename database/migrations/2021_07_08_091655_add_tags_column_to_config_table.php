@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddTagsColumnToConfigTable extends Migration
 {
@@ -26,7 +26,7 @@ class AddTagsColumnToConfigTable extends Migration
     public function down(): void
     {
         $tableName = config('laravel-config.table');
-        if (Schema::hasColumn($tableName, 'tags')){
+        if (Schema::hasColumn($tableName, 'tags')) {
             Schema::table($tableName, function (Blueprint $table) {
                 $table->dropColumn('tags');
             });
