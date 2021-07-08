@@ -13,7 +13,7 @@ class AddTagsColumnToConfigTable extends Migration
      */
     public function up(): void
     {
-        Schema::table('config', function (Blueprint $table) {
+        Schema::table(config('laravel-config.table'), function (Blueprint $table) {
             $table->json('tags')->nullable()->after('description');
         });
     }
@@ -25,8 +25,9 @@ class AddTagsColumnToConfigTable extends Migration
      */
     public function down(): void
     {
-        if (Schema::hasColumn('config', 'tags')){
-            Schema::table('config', function (Blueprint $table) {
+        $tableName = config('laravel-config.table');
+        if (Schema::hasColumn($tableName, 'tags')){
+            Schema::table($tableName, function (Blueprint $table) {
                 $table->dropColumn('tags');
             });
         }

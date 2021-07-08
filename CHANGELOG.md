@@ -3,6 +3,11 @@ All notable changes to `laravel-config` will be documented in this file.
 
 ## [Unreleased]
 
+## [4.3.0] - 2021-07-08
+
+- db migrations are now automatically discover.
+- now table name can be set from config.
+
 ## [4.2.0] - 2021-07-07
 
 - Tags feature added.
