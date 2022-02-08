@@ -11,9 +11,8 @@ class LaravelConfig
     /**
      * Get config by given name.
      *
-     * @param string $name
+     * @param  string  $name
      * @param  $default
-     *
      * @return mixed
      */
     public function get(string $name, $default = null)
@@ -30,7 +29,7 @@ class LaravelConfig
     /**
      * Get nested config params.
      *
-     * @param string $namespace
+     * @param  string  $namespace
      * @return Collection
      */
     public function getNested(string $namespace): Collection
@@ -70,9 +69,8 @@ class LaravelConfig
     /**
      * Set config with given data.
      *
-     * @param string $name
-     * @param          $value
-     *
+     * @param  string  $name
+     * @param  $value
      * @return mixed
      */
     public function set(string $name, $value)
@@ -92,8 +90,7 @@ class LaravelConfig
     /**
      * Check whether a config parameter is set.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return bool
      */
     public function has(string $name): bool
@@ -114,8 +111,7 @@ class LaravelConfig
     /**
      * Create a new config parameter.
      *
-     * @param ConfigItem $configItem
-     *
+     * @param  ConfigItem  $configItem
      * @return bool
      */
     public function create(ConfigItem $configItem): bool
@@ -132,9 +128,8 @@ class LaravelConfig
     /**
      * Update config paremeter.
      *
-     * @param Config $config
-     * @param ConfigItem $configItem
-     *
+     * @param  Config  $config
+     * @param  ConfigItem  $configItem
      * @return mixed
      */
     public function update(Config $config, ConfigItem $configItem)
@@ -145,8 +140,7 @@ class LaravelConfig
     /**
      * Delete config parameter.
      *
-     * @param Config $config
-     *
+     * @param  Config  $config
      * @return int
      */
     public function delete(Config $config): int
@@ -157,9 +151,8 @@ class LaravelConfig
     /**
      * Fill config paremeter columns.
      *
-     * @param Config $config
-     * @param ConfigItem $configItem
-     *
+     * @param  Config  $config
+     * @param  ConfigItem  $configItem
      * @return Config
      */
     private function fillColumns(Config $config, ConfigItem $configItem): Config

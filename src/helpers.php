@@ -7,7 +7,7 @@ if (! function_exists('create_config')) {
     /**
      * Create a config item.
      *
-     * @param ConfigItem $configItem
+     * @param  ConfigItem  $configItem
      * @return mixed
      */
     function create_config(ConfigItem $configItem)
@@ -20,7 +20,7 @@ if (! function_exists('read_config')) {
     /**
      * Read a config item by given name.
      *
-     * @param string|null $key
+     * @param  string|null  $key
      * @return mixed
      */
     function read_config(string $key = null)
@@ -37,7 +37,7 @@ if (! function_exists('read_nested')) {
     /**
      * Read nested config items by given namespace.
      *
-     * @param string|null $key
+     * @param  string|null  $key
      * @return mixed
      */
     function read_nested(string $key)
@@ -50,8 +50,8 @@ if (! function_exists('update_config')) {
     /**
      * Update given config item by given data.
      *
-     * @param Config $config
-     * @param ConfigItem $configItem
+     * @param  Config  $config
+     * @param  ConfigItem  $configItem
      * @return mixed
      */
     function update_config(Config $config, ConfigItem $configItem)
@@ -64,7 +64,7 @@ if (! function_exists('delete_config')) {
     /**
      * Delete given config item.
      *
-     * @param Config $config
+     * @param  Config  $config
      * @return mixed
      */
     function delete_config(Config $config)
@@ -77,7 +77,7 @@ if (! function_exists('set_config_value')) {
     /**
      * Shortcut to update the value of a config item by given name and value.
      *
-     * @param string $key
+     * @param  string  $key
      * @param $value
      * @return mixed
      */
@@ -91,7 +91,7 @@ if (! function_exists('has_config')) {
     /**
      * Check whether a config item exists by given name.
      *
-     * @param string $key
+     * @param  string  $key
      * @return bool
      */
     function has_config(string $key)
