@@ -3,6 +3,10 @@ All notable changes to `laravel-config` will be documented in this file.
 
 ## [Unreleased]
 
+## [4.4.0] - 2022-02-08
+
+- Laravel 9 support added.
+
 ## [4.3.0] - 2021-07-08
 
 - db migrations are now automatically discover.
