@@ -3,6 +3,10 @@ All notable changes to `laravel-config` will be documented in this file.
 
 ## [Unreleased]
 
+## [4.6.0] - 2023-02-16
+
+- Laravel 10 support added.
+
 ## [4.5.0] - 2022-02-08
 
 - Laravel 9 support added.
