@@ -241,7 +241,7 @@ class LaravelConfigTest extends TestCase
     {
         factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val' => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}'
+            'val' => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}',
         ]);
 
         $response = $this->laravelConfig->getValueAsDecodeJson('yunus.was.here');
@@ -257,7 +257,7 @@ class LaravelConfigTest extends TestCase
     {
         factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val' => '2024-02-28 17:00'
+            'val' => '2024-02-28 17:00',
         ]);
 
         $response = $this->laravelConfig->getValueAsDate('yunus.was.here');
