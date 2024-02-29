@@ -192,13 +192,13 @@ class LaravelConfigTest extends TestCase
     public function it_returns_nested_config_parameters(): void
     {
         factory(Config::class)->create([
-            'name'  => 'foo.bar',
-            'val'   => true,
+            'name' => 'foo.bar',
+            'val'  => true,
         ]);
 
         factory(Config::class)->create([
-            'name'  => 'foo.baz',
-            'val'   => false,
+            'name' => 'foo.baz',
+            'val'  => false,
         ]);
 
         $response = $this->laravelConfig->getNested('foo');
@@ -212,13 +212,13 @@ class LaravelConfigTest extends TestCase
     public function it_returns_value_as_boolean(): void
     {
         factory(Config::class)->create([
-            'name'  => 'yunus.was.here',
-            'val'   => "1",
+            'name' => 'yunus.was.here',
+            'val'  => "1",
         ]);
 
         factory(Config::class)->create([
-            'name'  => 'foo.bar',
-            'val'   => "0",
+            'name' => 'foo.bar',
+            'val'  => "0",
         ]);
 
         $this->assertTrue($this->laravelConfig->getValueAsBoolean('yunus.was.here'));
@@ -229,8 +229,8 @@ class LaravelConfigTest extends TestCase
     public function it_returns_value_as_int(): void
     {
         factory(Config::class)->create([
-            'name'  => 'yunus.was.here',
-            'val'   => "123456",
+            'name' => 'yunus.was.here',
+            'val'  => "123456",
         ]);
 
         $this->assertIsInt($this->laravelConfig->getValueAsInt('yunus.was.here'));
@@ -240,8 +240,8 @@ class LaravelConfigTest extends TestCase
     public function it_returns_value_as_decode_json(): void
     {
         factory(Config::class)->create([
-            'name'  => 'yunus.was.here',
-            'val'   => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}'
+            'name' => 'yunus.was.here',
+            'val'  => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}'
         ]);
 
         $response = $this->laravelConfig->getValueAsDecodeJson('yunus.was.here');
@@ -256,8 +256,8 @@ class LaravelConfigTest extends TestCase
     public function it_returns_value_as_date(): void
     {
         factory(Config::class)->create([
-            'name'  => 'yunus.was.here',
-            'val'   => '2024-02-28 17:00'
+            'name' => 'yunus.was.here',
+            'val'  => '2024-02-28 17:00'
         ]);
 
         $response = $this->laravelConfig->getValueAsDate('yunus.was.here');
