@@ -10,17 +10,10 @@ use TarfinLabs\LaravelConfig\Casters\IntegerCaster;
 use TarfinLabs\LaravelConfig\Casters\JsonCaster;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigItem;
+use TarfinLabs\LaravelConfig\Enums\ConfigDataType;
 
 class LaravelConfig
 {
-    private array $casters = [
-        'boolean' => BooleanCaster::class,
-        'date' => DateCaster::class,
-        'datetime' => DateTimeCaster::class,
-        'integer' => IntegerCaster::class,
-        'json' => JsonCaster::class,
-    ];
-
     /**
      * Get config by given name.
      *
@@ -36,15 +29,14 @@ class LaravelConfig
 
         $config = Config::where('name', $name)->first();
 
-        $type = $config->type;
-
-        if (array_key_exists($type, $this->casters)) {
-            $caster = new $this->casters[$type];
-
-            return $caster->cast($config->val);
-        }
-
-        return $config->val;
+        return match ($config->type) {
+            ConfigDataType::BOOLEAN->value => (new BooleanCaster())->cast($config->val),
+            ConfigDataType::INTEGER->value => (new IntegerCaster())->cast($config->val),
+            ConfigDataType::DATE->value => (new DateCaster())->cast($config->val),
+            ConfigDataType::DATE_TIME->value => (new DateTimeCaster())->cast($config->val),
+            ConfigDataType::JSON->value => (new JsonCaster())->cast($config->val),
+            default => $config->val,
+        };
     }
 
     /**
