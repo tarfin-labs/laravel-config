@@ -237,11 +237,25 @@ class LaravelConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_date_value_for_date_type_config_parameter_if_exists(): void
+    public function it_returns_datetime_value_for_datetime_type_config_parameter_if_exists(): void
     {
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '2024-02-29 12:00',
+            'type' => 'datetime',
+        ]);
+
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertInstanceOf(Carbon::class, $response);
+    }
+
+    /** @test */
+    public function it_returns_date_value_for_date_type_config_parameter_if_exists(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'yunus.was.here',
+            'val' => '2024-02-29',
             'type' => 'date',
         ]);
 

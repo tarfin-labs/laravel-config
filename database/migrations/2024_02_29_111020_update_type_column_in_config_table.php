@@ -14,7 +14,7 @@ class UpdateTypeColumnInConfigTable extends Migration
     public function up(): void
     {
         Schema::table(config('laravel-config.table'), function (Blueprint $table) {
-            $table->enum('type', ['boolean', 'text', 'date', 'json', 'array', 'integer'])->default('boolean')->change();
+            $table->enum('type', ['boolean', 'text', 'date', 'datetime', 'json', 'array', 'integer'])->default('boolean')->change();
         });
     }
 
