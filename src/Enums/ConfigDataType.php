@@ -1,4 +1,5 @@
 <?php
+
 namespace TarfinLabs\LaravelConfig\Enums;
 
 enum ConfigDataType: string
