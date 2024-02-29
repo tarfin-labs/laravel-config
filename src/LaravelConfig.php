@@ -29,14 +29,7 @@ class LaravelConfig
 
         $config = Config::where('name', $name)->first();
 
-        return match ($config->type) {
-            ConfigDataType::BOOLEAN->value => (new BooleanCaster())->cast($config->val),
-            ConfigDataType::INTEGER->value => (new IntegerCaster())->cast($config->val),
-            ConfigDataType::DATE->value => (new DateCaster())->cast($config->val),
-            ConfigDataType::DATE_TIME->value => (new DateTimeCaster())->cast($config->val),
-            ConfigDataType::JSON->value => (new JsonCaster())->cast($config->val),
-            default => $config->val,
-        };
+        return $config->val;
     }
 
     /**
