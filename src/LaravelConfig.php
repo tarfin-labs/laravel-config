@@ -2,6 +2,7 @@
 
 namespace TarfinLabs\LaravelConfig;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigItem;
@@ -164,5 +165,97 @@ class LaravelConfig
         $config->tags = $configItem->tags;
 
         return $config;
+    }
+
+    /**
+     * Retrieves the value of the specified configuration key as a boolean.
+     *
+     * @param string $name
+     * @param $default
+     * @return bool|null
+     */
+    public function getValueAsBoolean(string $name, $default = null): ?bool
+    {
+        $value = $this->get($name, $default);
+
+        if ($value === null) {
+            return $default;
+        }
+
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        return (bool) $value;
+    }
+
+    /**
+     * Retrieves the value of the specified configuration key as an integer.
+     *
+     * @param string $name The specified configuration key
+     * @param mixed $default The default value (optional)
+     * @return int|null The integer value of the specified configuration key or null
+     */
+    public function getValueAsInt(string $name, $default = null): ?int
+    {
+        $value = $this->get($name, $default);
+
+        if ($value === null) {
+            return $default;
+        }
+
+        if (is_int($value)) {
+            return $value;
+        }
+
+        return (int) $value;
+    }
+
+    /**
+     * Retrieves the value of the specified configuration key and decodes it from JSON to an array or an object.
+     *
+     * @param string $name The specified configuration key
+     * @param mixed $default The default value (optional)
+     * @param bool $associative When true, returned objects will be converted into associative arrays.
+     * @param int $depth User specified recursion depth.
+     * @return array The decoded array value of the specified configuration key
+     */
+    public function getValueAsDecodeJson(string $name, $default = [], ?bool $associative = true, int $depth = 512): array
+    {
+        $value = $this->get($name, $default);
+
+        if ($value === null) {
+            return $default;
+        }
+
+        if (is_array($value)) {
+            return $value;
+        }
+
+        $decodedValue = json_decode($value, $associative, $depth);
+
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return $decodedValue;
+        }
+
+        return $default;
+    }
+
+    /**
+     * Retrieves the value of the specified configuration key and converts it to a Carbon Date instance.
+     *
+     * @param string $name The specified configuration key
+     * @param mixed $default The default value (optional)
+     * @return Carbon|null The Carbon Date instance of the specified configuration key, or null if conversion fails
+     */
+    public function getValueAsDate(string $name, $default = null): ?Carbon
+    {
+        $value = $this->get($name, $default);
+
+        if ($value === null) {
+            return $default;
+        }
+
+        return Carbon::createFromFormat('Y-m-d H:i', $value);
     }
 }
