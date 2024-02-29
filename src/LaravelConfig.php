@@ -4,11 +4,22 @@ namespace TarfinLabs\LaravelConfig;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use TarfinLabs\LaravelConfig\Casters\BooleanCaster;
+use TarfinLabs\LaravelConfig\Casters\DateCaster;
+use TarfinLabs\LaravelConfig\Casters\IntegerCaster;
+use TarfinLabs\LaravelConfig\Casters\JsonCaster;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigItem;
 
 class LaravelConfig
 {
+    private array $casters = [
+        'boolean' => BooleanCaster::class,
+        'date' => DateCaster::class,
+        'integer' => IntegerCaster::class,
+        'json' => JsonCaster::class,
+    ];
+
     /**
      * Get config by given name.
      *
@@ -23,6 +34,13 @@ class LaravelConfig
         }
 
         $config = Config::where('name', $name)->first();
+
+        $type = $config->type;
+
+        if (array_key_exists($type, $this->casters)) {
+            $caster = new $this->casters[$type];
+            return $caster->cast($config->val);
+        }
 
         return $config->val;
     }
@@ -48,6 +66,7 @@ class LaravelConfig
             }
 
             $param->name = rtrim($name, '.');
+
             $config->push($param);
         }
 
@@ -165,97 +184,5 @@ class LaravelConfig
         $config->tags = $configItem->tags;
 
         return $config;
-    }
-
-    /**
-     * Retrieves the value of the specified configuration key as a boolean.
-     *
-     * @param  string  $name
-     * @param  $default
-     * @return bool|null
-     */
-    public function getValueAsBoolean(string $name, $default = null): ?bool
-    {
-        $value = $this->get($name, $default);
-
-        if ($value === null) {
-            return $default;
-        }
-
-        if (is_bool($value)) {
-            return $value;
-        }
-
-        return (bool) $value;
-    }
-
-    /**
-     * Retrieves the value of the specified configuration key as an integer.
-     *
-     * @param  string  $name
-     * @param  mixed  $default
-     * @return int|null
-     */
-    public function getValueAsInt(string $name, $default = null): ?int
-    {
-        $value = $this->get($name, $default);
-
-        if ($value === null) {
-            return $default;
-        }
-
-        if (is_int($value)) {
-            return $value;
-        }
-
-        return (int) $value;
-    }
-
-    /**
-     * Retrieves the value of the specified configuration key and decodes it from JSON to an array or an object.
-     *
-     * @param  string  $name
-     * @param  mixed  $default
-     * @param  bool  $associative
-     * @param  int  $depth
-     * @return array
-     */
-    public function getValueAsDecodeJson(string $name, $default = [], ?bool $associative = true, int $depth = 512): array
-    {
-        $value = $this->get($name, $default);
-
-        if ($value === null) {
-            return $default;
-        }
-
-        if (is_array($value)) {
-            return $value;
-        }
-
-        $decodedValue = json_decode($value, $associative, $depth);
-
-        if (json_last_error() === JSON_ERROR_NONE) {
-            return $decodedValue;
-        }
-
-        return $default;
-    }
-
-    /**
-     * Retrieves the value of the specified configuration key and converts it to a Carbon Date instance.
-     *
-     * @param  string  $name
-     * @param  mixed  $default
-     * @return Carbon|null
-     */
-    public function getValueAsDate(string $name, $default = null): ?Carbon
-    {
-        $value = $this->get($name, $default);
-
-        if ($value === null) {
-            return $default;
-        }
-
-        return Carbon::createFromFormat('Y-m-d H:i', $value);
     }
 }
