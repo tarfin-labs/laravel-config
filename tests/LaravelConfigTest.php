@@ -33,9 +33,9 @@ class LaravelConfigTest extends TestCase
         $this->laravelConfig->create($configItem);
 
         $this->assertDatabaseHas(config('laravel-config.table'), [
-            'name'        => $configItem->name,
-            'val'         => $configItem->val,
-            'type'        => $configItem->type,
+            'name' => $configItem->name,
+            'val' => $configItem->val,
+            'type' => $configItem->type,
             'description' => $configItem->description,
         ]);
     }
@@ -54,9 +54,9 @@ class LaravelConfigTest extends TestCase
         $this->laravelConfig->create($configItem);
 
         $this->assertDatabaseHas(config('laravel-config.table'), [
-            'name'        => $configItem->name,
-            'val'         => $configItem->val,
-            'type'        => $configItem->type,
+            'name' => $configItem->name,
+            'val' => $configItem->val,
+            'type' => $configItem->type,
             'description' => $configItem->description,
         ]);
 
@@ -96,9 +96,9 @@ class LaravelConfigTest extends TestCase
         $this->laravelConfig->update($config, $configItem);
 
         $this->assertDatabaseHas(config('laravel-config.table'), [
-            'name'        => $config->name,
-            'val'         => $configItem->val,
-            'type'        => $configItem->type,
+            'name' => $config->name,
+            'val' => $configItem->val,
+            'type' => $configItem->type,
             'description' => $configItem->description,
         ]);
     }
@@ -193,12 +193,12 @@ class LaravelConfigTest extends TestCase
     {
         factory(Config::class)->create([
             'name' => 'foo.bar',
-            'val'  => true,
+            'val' => true,
         ]);
 
         factory(Config::class)->create([
             'name' => 'foo.baz',
-            'val'  => false,
+            'val' => false,
         ]);
 
         $response = $this->laravelConfig->getNested('foo');
@@ -213,12 +213,12 @@ class LaravelConfigTest extends TestCase
     {
         factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val'  => "1",
+            'val' => '1',
         ]);
 
         factory(Config::class)->create([
             'name' => 'foo.bar',
-            'val'  => "0",
+            'val' => '0',
         ]);
 
         $this->assertTrue($this->laravelConfig->getValueAsBoolean('yunus.was.here'));
@@ -230,7 +230,7 @@ class LaravelConfigTest extends TestCase
     {
         factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val'  => "123456",
+            'val' => '123456',
         ]);
 
         $this->assertIsInt($this->laravelConfig->getValueAsInt('yunus.was.here'));
@@ -241,7 +241,7 @@ class LaravelConfigTest extends TestCase
     {
         factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val'  => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}'
+            'val' => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}'
         ]);
 
         $response = $this->laravelConfig->getValueAsDecodeJson('yunus.was.here');
@@ -257,7 +257,7 @@ class LaravelConfigTest extends TestCase
     {
         factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val'  => '2024-02-28 17:00'
+            'val' => '2024-02-28 17:00'
         ]);
 
         $response = $this->laravelConfig->getValueAsDate('yunus.was.here');

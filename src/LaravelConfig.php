@@ -12,7 +12,7 @@ class LaravelConfig
     /**
      * Get config by given name.
      *
-     * @param  string  $name
+     * @param  string $name
      * @param  $default
      * @return mixed
      */
@@ -170,7 +170,7 @@ class LaravelConfig
     /**
      * Retrieves the value of the specified configuration key as a boolean.
      *
-     * @param  string $name
+     * @param  string  $name
      * @param  $default
      * @return bool|null
      */
@@ -192,8 +192,8 @@ class LaravelConfig
     /**
      * Retrieves the value of the specified configuration key as an integer.
      *
-     * @param  string $name
-     * @param  mixed $default
+     * @param  string  $name
+     * @param  mixed  $default
      * @return int|null
      */
     public function getValueAsInt(string $name, $default = null): ?int
@@ -214,10 +214,10 @@ class LaravelConfig
     /**
      * Retrieves the value of the specified configuration key and decodes it from JSON to an array or an object.
      *
-     * @param  string $name
-     * @param  mixed $default
-     * @param  bool $associative
-     * @param  int $depth
+     * @param  string  $name
+     * @param  mixed  $default
+     * @param  bool  $associative
+     * @param  int  $depth
      * @return array
      */
     public function getValueAsDecodeJson(string $name, $default = [], ?bool $associative = true, int $depth = 512): array
@@ -244,8 +244,8 @@ class LaravelConfig
     /**
      * Retrieves the value of the specified configuration key and converts it to a Carbon Date instance.
      *
-     * @param  string $name
-     * @param  mixed $default
+     * @param  string  $name
+     * @param  mixed  $default
      * @return Carbon|null
      */
     public function getValueAsDate(string $name, $default = null): ?Carbon
