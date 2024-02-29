@@ -209,59 +209,62 @@ class LaravelConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_value_as_boolean(): void
+    public function it_returns_boolean_value_for_boolean_type_config_parameter_if_exists(): void
     {
-        factory(Config::class)->create([
+        $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '1',
+            'type' => 'boolean',
         ]);
 
-        factory(Config::class)->create([
-            'name' => 'foo.bar',
-            'val' => '0',
-        ]);
+        $response = $this->laravelConfig->get($config->name);
 
-        $this->assertTrue($this->laravelConfig->getValueAsBoolean('yunus.was.here'));
-        $this->assertFalse($this->laravelConfig->getValueAsBoolean('foo.bar'));
+        $this->assertTrue($response);
     }
 
     /** @test */
-    public function it_returns_value_as_int(): void
+    public function it_returns_integer_value_for_integer_type_config_parameter_if_exists(): void
     {
-        factory(Config::class)->create([
+        $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '123456',
+            'type' => 'integer',
         ]);
 
-        $this->assertIsInt($this->laravelConfig->getValueAsInt('yunus.was.here'));
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertIsInt($response);
     }
 
     /** @test */
-    public function it_returns_value_as_decode_json(): void
+    public function it_returns_date_value_for_date_type_config_parameter_if_exists(): void
     {
-        factory(Config::class)->create([
+        $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val' => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}',
+            'val' => '2024-02-29 12:00',
+            'type' => 'date',
         ]);
 
-        $response = $this->laravelConfig->getValueAsDecodeJson('yunus.was.here');
-
-        $this->assertIsArray($response);
-        $this->assertArrayHasKey('9', $response);
-        $this->assertArrayHasKey('2', $response);
-        $this->assertArrayHasKey('31', $response);
-    }
-
-    /** @test */
-    public function it_returns_value_as_date(): void
-    {
-        factory(Config::class)->create([
-            'name' => 'yunus.was.here',
-            'val' => '2024-02-28 17:00',
-        ]);
-
-        $response = $this->laravelConfig->getValueAsDate('yunus.was.here');
+        $response = $this->laravelConfig->get($config->name);
 
         $this->assertInstanceOf(Carbon::class, $response);
+    }
+
+    /** @test */
+    public function it_returns_json_value_for_json_type_config_parameter_if_exists(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'yunus.was.here',
+            'val' => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}',
+            'type' => 'json',
+        ]);
+
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertIsArray($response);
+
+        $this->assertArrayHasKey(9, $response);
+        $this->assertArrayHasKey(2, $response);
+        $this->assertArrayHasKey(31, $response);
     }
 }
