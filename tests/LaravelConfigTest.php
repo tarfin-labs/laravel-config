@@ -2,6 +2,7 @@
 
 namespace TarfinLabs\LaravelConfig\Tests;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
@@ -205,5 +206,62 @@ class LaravelConfigTest extends TestCase
         $this->assertEquals(2, $response->count());
         $this->assertEquals('bar', $response->first()->name);
         $this->assertEquals('baz', $response->last()->name);
+    }
+
+    /** @test */
+    public function it_returns_value_as_boolean(): void
+    {
+        factory(Config::class)->create([
+            'name'  => 'yunus.was.here',
+            'val'   => "1",
+        ]);
+
+        factory(Config::class)->create([
+            'name'  => 'foo.bar',
+            'val'   => "0",
+        ]);
+
+        $this->assertTrue($this->laravelConfig->getValueAsBoolean('yunus.was.here'));
+        $this->assertFalse($this->laravelConfig->getValueAsBoolean('foo.bar'));
+    }
+
+    /** @test */
+    public function it_returns_value_as_int(): void
+    {
+        factory(Config::class)->create([
+            'name'  => 'yunus.was.here',
+            'val'   => "123456",
+        ]);
+
+        $this->assertIsInt($this->laravelConfig->getValueAsInt('yunus.was.here'));
+    }
+
+    /** @test */
+    public function it_returns_value_as_decode_json(): void
+    {
+        factory(Config::class)->create([
+            'name'  => 'yunus.was.here',
+            'val'   => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}'
+        ]);
+
+        $response = $this->laravelConfig->getValueAsDecodeJson('yunus.was.here');
+
+        $this->assertIsArray($response);
+        $this->assertArrayHasKey('9', $response);
+        $this->assertArrayHasKey('2', $response);
+        $this->assertArrayHasKey('31', $response);
+    }
+
+    /** @test */
+    public function it_returns_value_as_date(): void
+    {
+        factory(Config::class)->create([
+            'name'  => 'yunus.was.here',
+            'val'   => '2024-02-28 17:00'
+        ]);
+
+        $response = $this->laravelConfig->getValueAsDate('yunus.was.here');
+
+        $this->assertInstanceOf(Carbon::class, $response);
     }
 }
