@@ -38,7 +38,7 @@ class LaravelConfig
 
         if (array_key_exists($type, $this->casters)) {
             $caster = new $this->casters[$type];
-            
+
             return $caster->cast($config->val);
         }
 
