@@ -58,28 +58,6 @@ Get value with config name:
 LaravelConfig::get('key');
 ```
 
-Get value as boolean with config name:
-
-``` php
-LaravelConfig::getValueAsBoolean('key');
-```
-
-Get value as integer with config name:
-
-``` php
-LaravelConfig::getValueAsInt('key');
-```
-Get value as decoded json with config name:
-
-``` php
-LaravelConfig::getValueAsDecodeJson('key');
-```
-Get value as date with config name:
-
-``` php
-LaravelConfig::getValueAsDate('key');
-```
-
 Set value with config name and value:
 
 ``` php
