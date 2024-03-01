@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
+use TarfinLabs\LaravelConfig\Enums\ConfigDataType;
 use TarfinLabs\LaravelConfig\LaravelConfig;
 
 class LaravelConfigTest extends TestCase
@@ -214,7 +215,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '1',
-            'type' => 'boolean',
+            'type' => ConfigDataType::BOOLEAN,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
@@ -228,7 +229,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '123456',
-            'type' => 'integer',
+            'type' => ConfigDataType::INTEGER,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
@@ -242,7 +243,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '2024-02-29 12:00',
-            'type' => 'datetime',
+            'type' => ConfigDataType::DATE_TIME,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
@@ -256,7 +257,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '2024-02-29',
-            'type' => 'date',
+            'type' => ConfigDataType::DATE,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
@@ -270,7 +271,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}',
-            'type' => 'json',
+            'type' => ConfigDataType::JSON,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
