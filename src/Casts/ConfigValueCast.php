@@ -13,7 +13,7 @@ class ConfigValueCast implements CastsAttributes
     {
         return match ($attributes['type']) {
             ConfigDataType::BOOLEAN->value => (bool) $value,
-            ConfigDataType::INTEGER->value => (integer) $value,
+            ConfigDataType::INTEGER->value => (int) $value,
             ConfigDataType::DATE->value => Carbon::createFromFormat('Y-m-d', $value),
             ConfigDataType::DATE_TIME->value => Carbon::createFromFormat('Y-m-d H:i', $value),
             ConfigDataType::JSON->value => json_decode($value, true),
