@@ -26,7 +26,7 @@ class LaravelConfigTest extends TestCase
     {
         $factory = new ConfigFactory();
         $configItem = $factory->setName(Str::random(5))
-                              ->setType(ConfigDataType::BOOLEAN->value)
+                              ->setType(ConfigDataType::BOOLEAN)
                               ->setValue('1')
                               ->setDescription(Str::random(50))
                               ->get();
