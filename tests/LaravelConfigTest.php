@@ -215,7 +215,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '1',
-            'type' => ConfigDataType::BOOLEAN->value,
+            'type' => ConfigDataType::BOOLEAN,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
@@ -229,7 +229,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '123456',
-            'type' => ConfigDataType::INTEGER->value,
+            'type' => ConfigDataType::INTEGER,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
@@ -243,7 +243,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '2024-02-29 12:00',
-            'type' => ConfigDataType::DATE_TIME->value,
+            'type' => ConfigDataType::DATE_TIME,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
@@ -257,7 +257,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '2024-02-29',
-            'type' => ConfigDataType::DATE->value,
+            'type' => ConfigDataType::DATE,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
@@ -271,7 +271,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
             'val' => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}',
-            'type' => ConfigDataType::JSON->value,
+            'type' => ConfigDataType::JSON,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
