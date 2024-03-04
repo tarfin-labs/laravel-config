@@ -72,7 +72,7 @@ class LaravelConfigTest extends TestCase
 
         $factory = new ConfigFactory();
         $configItem = $factory->setName($config->name)
-                              ->setType(ConfigDataType::BOOLEAN->value)
+                              ->setType(ConfigDataType::BOOLEAN)
                               ->setValue('1')
                               ->setDescription(Str::random(50))
                               ->get();
@@ -89,7 +89,7 @@ class LaravelConfigTest extends TestCase
         $this->assertDatabaseHas(config('laravel-config.table'), ['name' => $config->name, 'val' => $config->val]);
 
         $factory = new ConfigFactory($config);
-        $configItem = $factory->setType(ConfigDataType::BOOLEAN->value)
+        $configItem = $factory->setType(ConfigDataType::BOOLEAN)
                               ->setValue('0')
                               ->setDescription('updated-description')
                               ->get();
