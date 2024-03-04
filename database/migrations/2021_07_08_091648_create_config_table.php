@@ -17,7 +17,7 @@ class CreateConfigTable extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->enum('type', ['boolean', 'text'])->default('boolean');
+            $table->string('type')->default('boolean');
             $table->string('val')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
