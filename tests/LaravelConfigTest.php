@@ -2,9 +2,11 @@
 
 namespace TarfinLabs\LaravelConfig\Tests;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
+use TarfinLabs\LaravelConfig\Enums\ConfigDataType;
 use TarfinLabs\LaravelConfig\LaravelConfig;
 
 class LaravelConfigTest extends TestCase
@@ -24,7 +26,7 @@ class LaravelConfigTest extends TestCase
     {
         $factory = new ConfigFactory();
         $configItem = $factory->setName(Str::random(5))
-                              ->setType('boolean')
+                              ->setType(ConfigDataType::BOOLEAN)
                               ->setValue('1')
                               ->setDescription(Str::random(50))
                               ->get();
@@ -32,9 +34,9 @@ class LaravelConfigTest extends TestCase
         $this->laravelConfig->create($configItem);
 
         $this->assertDatabaseHas(config('laravel-config.table'), [
-            'name'        => $configItem->name,
-            'val'         => $configItem->val,
-            'type'        => $configItem->type,
+            'name' => $configItem->name,
+            'val' => $configItem->val,
+            'type' => $configItem->type,
             'description' => $configItem->description,
         ]);
     }
@@ -44,7 +46,7 @@ class LaravelConfigTest extends TestCase
     {
         $factory = new ConfigFactory();
         $configItem = $factory->setName(Str::random(5))
-            ->setType('boolean')
+            ->setType(ConfigDataType::BOOLEAN)
             ->setValue('1')
             ->setTags(['system'])
             ->setDescription(Str::random(50))
@@ -53,9 +55,9 @@ class LaravelConfigTest extends TestCase
         $this->laravelConfig->create($configItem);
 
         $this->assertDatabaseHas(config('laravel-config.table'), [
-            'name'        => $configItem->name,
-            'val'         => $configItem->val,
-            'type'        => $configItem->type,
+            'name' => $configItem->name,
+            'val' => $configItem->val,
+            'type' => $configItem->type,
             'description' => $configItem->description,
         ]);
 
@@ -70,7 +72,7 @@ class LaravelConfigTest extends TestCase
 
         $factory = new ConfigFactory();
         $configItem = $factory->setName($config->name)
-                              ->setType('boolean')
+                              ->setType(ConfigDataType::BOOLEAN)
                               ->setValue('1')
                               ->setDescription(Str::random(50))
                               ->get();
@@ -87,7 +89,7 @@ class LaravelConfigTest extends TestCase
         $this->assertDatabaseHas(config('laravel-config.table'), ['name' => $config->name, 'val' => $config->val]);
 
         $factory = new ConfigFactory($config);
-        $configItem = $factory->setType('boolean')
+        $configItem = $factory->setType(ConfigDataType::BOOLEAN)
                               ->setValue('0')
                               ->setDescription('updated-description')
                               ->get();
@@ -95,9 +97,9 @@ class LaravelConfigTest extends TestCase
         $this->laravelConfig->update($config, $configItem);
 
         $this->assertDatabaseHas(config('laravel-config.table'), [
-            'name'        => $config->name,
-            'val'         => $configItem->val,
-            'type'        => $configItem->type,
+            'name' => $config->name,
+            'val' => $configItem->val,
+            'type' => $configItem->type,
             'description' => $configItem->description,
         ]);
     }
@@ -191,13 +193,13 @@ class LaravelConfigTest extends TestCase
     public function it_returns_nested_config_parameters(): void
     {
         factory(Config::class)->create([
-            'name'  => 'foo.bar',
-            'val'   => true,
+            'name' => 'foo.bar',
+            'val' => true,
         ]);
 
         factory(Config::class)->create([
-            'name'  => 'foo.baz',
-            'val'   => false,
+            'name' => 'foo.baz',
+            'val' => false,
         ]);
 
         $response = $this->laravelConfig->getNested('foo');
@@ -205,5 +207,79 @@ class LaravelConfigTest extends TestCase
         $this->assertEquals(2, $response->count());
         $this->assertEquals('bar', $response->first()->name);
         $this->assertEquals('baz', $response->last()->name);
+    }
+
+    /** @test */
+    public function it_returns_boolean_value_for_boolean_type_config_parameter_if_exists(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'yunus.was.here',
+            'val' => '1',
+            'type' => ConfigDataType::BOOLEAN,
+        ]);
+
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertTrue($response);
+    }
+
+    /** @test */
+    public function it_returns_integer_value_for_integer_type_config_parameter_if_exists(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'yunus.was.here',
+            'val' => '123456',
+            'type' => ConfigDataType::INTEGER,
+        ]);
+
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertIsInt($response);
+    }
+
+    /** @test */
+    public function it_returns_datetime_value_for_datetime_type_config_parameter_if_exists(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'yunus.was.here',
+            'val' => '2024-02-29 12:00',
+            'type' => ConfigDataType::DATE_TIME,
+        ]);
+
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertInstanceOf(Carbon::class, $response);
+    }
+
+    /** @test */
+    public function it_returns_date_value_for_date_type_config_parameter_if_exists(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'yunus.was.here',
+            'val' => '2024-02-29',
+            'type' => ConfigDataType::DATE,
+        ]);
+
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertInstanceOf(Carbon::class, $response);
+    }
+
+    /** @test */
+    public function it_returns_json_value_for_json_type_config_parameter_if_exists(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'yunus.was.here',
+            'val' => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}',
+            'type' => ConfigDataType::JSON,
+        ]);
+
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertIsArray($response);
+
+        $this->assertArrayHasKey(9, $response);
+        $this->assertArrayHasKey(2, $response);
+        $this->assertArrayHasKey(31, $response);
     }
 }

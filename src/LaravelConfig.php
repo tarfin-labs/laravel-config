@@ -47,6 +47,7 @@ class LaravelConfig
             }
 
             $param->name = rtrim($name, '.');
+
             $config->push($param);
         }
 
@@ -54,7 +55,7 @@ class LaravelConfig
     }
 
     /**
-     * @param $tags
+     * @param  $tags
      * @return Collection
      */
     public function getByTag($tags): ?Collection

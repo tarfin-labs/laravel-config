@@ -3,6 +3,12 @@ All notable changes to `laravel-config` will be documented in this file.
 
 ## [Unreleased]
 
+## [5.0.0] - 2024-03-05
+
+- Dropped support for PHP versions below 8.1.
+- Added dynamic casting support to the LaravelConfig class, enabling it to cast configuration values based on their types.
+- Added new enum `ConfigValueCast.php`
+
 ## [4.7.0] - 2023-05-11
 
 - PHP 8.2 support added.

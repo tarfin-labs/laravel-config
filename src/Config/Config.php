@@ -3,6 +3,7 @@
 namespace TarfinLabs\LaravelConfig\Config;
 
 use Illuminate\Database\Eloquent\Model;
+use TarfinLabs\LaravelConfig\Casts\ConfigValueCast;
 
 class Config extends Model
 {
@@ -14,6 +15,7 @@ class Config extends Model
 
     protected $casts = [
         'tags' => 'array',
+        'val' => ConfigValueCast::class,
     ];
 
     public function __construct($attributes = [])

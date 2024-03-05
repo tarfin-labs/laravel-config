@@ -43,7 +43,7 @@ Create new config parameter:
 ``` php
 $factory = new ConfigFactory();
 $configItem = $factory->setName('key')
-    ->setType('boolean')
+    ->setType(ConfigDataType::BOOLEAN)
     ->setValue('1')
     ->setTags(['system'])//optional
     ->setDescription('Lorem ipsum dolor sit amet')
@@ -57,6 +57,7 @@ Get value with config name:
 ``` php
 LaravelConfig::get('key');
 ```
+
 Set value with config name and value:
 
 ``` php
@@ -86,7 +87,7 @@ Update config with new values:
 ``` php
 $factory = new ConfigFactory($configId);
 $configItem = $factory->setName('updated-key')
-    ->setType('boolean')
+    ->setType(ConfigDataType::BOOLEAN)
     ->setValue('0')
     ->setTags(['system'])//optional
     ->setDescription('updated description')
@@ -144,7 +145,7 @@ You can also use helper functions:
 // Creating config item
 $factory = new ConfigFactory();
 $configItem = $factory->setName('key')
-    ->setType('boolean')
+    ->setType(ConfigDataType::BOOLEAN)
     ->setValue('1')
     ->setTags(['system'])//optional
     ->setDescription('Lorem ipsum dolor sit amet')
@@ -164,7 +165,7 @@ set_config_value('key', 'value');
 // Updating config item
 $factory = new ConfigFactory($configId);
 $configItem = $factory->setName('updated-key')
-    ->setType('boolean')
+    ->setType(ConfigDataType::BOOLEAN)
     ->setTags(['system'])//optional
     ->setValue('0')
     ->setDescription('updated description')
