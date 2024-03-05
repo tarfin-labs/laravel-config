@@ -43,7 +43,7 @@ class ConfigFactory
     /**
      * Set the value of config parameter.
      *
-     * @param $value
+     * @param  $value
      * @return $this
      */
     public function setValue($value): self
@@ -56,7 +56,7 @@ class ConfigFactory
     /**
      * Set the type of config parameter.
      *
-     * @param $type
+     * @param  $type
      * @return $this
      */
     public function setType($type): self
@@ -69,7 +69,7 @@ class ConfigFactory
     /**
      * Set the description of config parameter.
      *
-     * @param $description
+     * @param  $description
      * @return $this
      */
     public function setDescription($description): self
@@ -82,7 +82,7 @@ class ConfigFactory
     /**
      * Set the tags of config parameter.
      *
-     * @param $tags
+     * @param  $tags
      * @return $this
      */
     public function setTags($tags): self

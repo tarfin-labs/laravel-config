@@ -78,7 +78,7 @@ if (! function_exists('set_config_value')) {
      * Shortcut to update the value of a config item by given name and value.
      *
      * @param  string  $key
-     * @param $value
+     * @param  $value
      * @return mixed
      */
     function set_config_value(string $key, $value)
