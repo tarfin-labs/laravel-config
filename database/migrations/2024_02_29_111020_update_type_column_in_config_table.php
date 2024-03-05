@@ -14,7 +14,7 @@ class UpdateTypeColumnInConfigTable extends Migration
     public function up(): void
     {
         Schema::table(config('laravel-config.table'), function (Blueprint $table) {
-            $table->string('type')->default('boolean')->change();
+            $table->string('type')->nullable(false)->default('boolean')->change();
         });
     }
 
@@ -26,7 +26,7 @@ class UpdateTypeColumnInConfigTable extends Migration
     public function down(): void
     {
         Schema::table(config('laravel-config.table'), function (Blueprint $table) {
-            $table->enum('type', ['boolean', 'text'])->default('boolean')->change();
+            $table->enum('type', ['boolean', 'text'])->nullable()->default('boolean')->change();
         });
     }
 }
