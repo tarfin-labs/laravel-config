@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class UpdateTypeColumnInConfigTable extends Migration
@@ -14,7 +15,7 @@ class UpdateTypeColumnInConfigTable extends Migration
     public function up(): void
     {
         Schema::table(config('laravel-config.table'), function (Blueprint $table) {
-            $table->string('type')->nullable(false)->default('boolean')->change();
+            DB::statement("ALTER TABLE laravel_config CHANGE type type varchar(255) DEFAULT 'boolean' NOT NULL");
         });
     }
 
@@ -26,7 +27,7 @@ class UpdateTypeColumnInConfigTable extends Migration
     public function down(): void
     {
         Schema::table(config('laravel-config.table'), function (Blueprint $table) {
-            $table->enum('type', ['boolean', 'text'])->nullable()->default('boolean')->change();
+            DB::statement("ALTER TABLE laravel_config CHANGE type type ENUM('boolean','text') DEFAULT 'boolean' NOT NULL ");
         });
     }
 }
