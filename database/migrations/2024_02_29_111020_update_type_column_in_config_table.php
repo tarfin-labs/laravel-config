@@ -14,20 +14,21 @@ class UpdateTypeColumnInConfigTable extends Migration
      */
     public function up(): void
     {
-        Schema::table(config('laravel-config.table'), function (Blueprint $table) {
-            DB::statement("ALTER TABLE laravel_config CHANGE type type varchar(255) DEFAULT 'boolean' NOT NULL");
-        });
+        $tableName = config('laravel-config.table');
+
+        Schema::table($tableName, function () use($tableName): void {
+            DB::statement("ALTER TABLE $tableName CHANGE type type varchar(255) DEFAULT 'boolean' NOT NULL");        });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {
-        Schema::table(config('laravel-config.table'), function (Blueprint $table) {
-            DB::statement("ALTER TABLE laravel_config CHANGE type type ENUM('boolean','text') DEFAULT 'boolean' NOT NULL ");
+        $tableName = config('laravel-config.table');
+
+        Schema::table($tableName, function () use($tableName): void {
+            DB::statement("ALTER TABLE $tableName CHANGE type type ENUM('boolean','text') DEFAULT 'boolean' NOT NULL ");
         });
     }
 }
