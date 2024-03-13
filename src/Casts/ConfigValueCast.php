@@ -24,5 +24,18 @@ class ConfigValueCast implements CastsAttributes
     public function set(Model $model, string $key, mixed $value, array $attributes)
     {
         return $value;
+
+        $type = $attributes['type']?->value ?? $attributes['type'] ?? null;
+
+        switch ($type) {
+            case ConfigDataType::DATE->value:
+                return Carbon::parse($value)->format('Y-m-d');
+            case ConfigDataType::DATE_TIME->value:
+                return Carbon::parse($value)->format('Y-m-d H:i');
+            case ConfigDataType::JSON->value:
+                return json_encode($value, true);
+            default:
+                return $value;
+        }
     }
 }
