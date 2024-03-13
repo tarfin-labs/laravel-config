@@ -3,6 +3,9 @@
 namespace TarfinLabs\LaravelConfig\Tests;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
+use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
@@ -256,7 +259,7 @@ class LaravelConfigTest extends TestCase
     {
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val' => '2024-02-29',
+            'val' => '2024-02-29 14:50:00',
             'type' => ConfigDataType::DATE,
         ]);
 
@@ -270,7 +273,7 @@ class LaravelConfigTest extends TestCase
     {
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val' => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}',
+            'val' => [9 => [7,8,9], 2 => [7,8,9], 31 => [10,11,12]],
             'type' => ConfigDataType::JSON,
         ]);
 
