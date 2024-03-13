@@ -282,4 +282,37 @@ class LaravelConfigTest extends TestCase
         $this->assertArrayHasKey(2, $response);
         $this->assertArrayHasKey(31, $response);
     }
+
+    /** @test */
+    public function it_returns_in_caster_type_if_type_is_custom_caster_with_param(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'fatih.was.here',
+            'val' => [ConfigDataType::DATE],
+            'type' => AsEnumCollection::class.':'.ConfigDataType::class,
+        ]);
+
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertCount(1, $response);
+
+        $this->assertEquals([ConfigDataType::DATE], $response->toArray());
+    }
+
+    /** @test */
+    public function it_returns_in_caster_type_if_type_is_custom_caster(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'fatih.was.here',
+            'val' => [ConfigDataType::DATE->value],
+            'type' => AsCollection::class,
+        ]);
+
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertCount(1, $response);
+        $this->assertEquals([ConfigDataType::DATE->value], $response->toArray());
+    }
 }
