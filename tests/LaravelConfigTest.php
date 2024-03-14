@@ -292,7 +292,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'fatih.was.here',
             'val' => [ConfigDataType::DATE],
-            'type' => AsEnumCollection::class . ':' . ConfigDataType::class,
+            'type' => AsEnumCollection::class.':'.ConfigDataType::class,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
