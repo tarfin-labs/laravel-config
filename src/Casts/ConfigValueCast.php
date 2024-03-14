@@ -15,9 +15,9 @@ class ConfigValueCast implements CastsAttributes
     {
         switch ($attributes['type']) {
             case ConfigDataType::BOOLEAN->value:
-                return (bool)$value;
+                return (bool) $value;
             case ConfigDataType::INTEGER->value:
-                return (int)$value;
+                return (int) $value;
             case ConfigDataType::DATE->value:
                 return Carbon::createFromFormat('Y-m-d', $value);
             case ConfigDataType::DATE_TIME->value:

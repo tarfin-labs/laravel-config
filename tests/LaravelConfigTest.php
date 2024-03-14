@@ -29,10 +29,10 @@ class LaravelConfigTest extends TestCase
     {
         $factory = new ConfigFactory();
         $configItem = $factory->setName(Str::random(5))
-                              ->setType(ConfigDataType::BOOLEAN)
-                              ->setValue('1')
-                              ->setDescription(Str::random(50))
-                              ->get();
+            ->setType(ConfigDataType::BOOLEAN)
+            ->setValue('1')
+            ->setDescription(Str::random(50))
+            ->get();
 
         $this->laravelConfig->create($configItem);
 
@@ -75,10 +75,10 @@ class LaravelConfigTest extends TestCase
 
         $factory = new ConfigFactory();
         $configItem = $factory->setName($config->name)
-                              ->setType(ConfigDataType::BOOLEAN)
-                              ->setValue('1')
-                              ->setDescription(Str::random(50))
-                              ->get();
+            ->setType(ConfigDataType::BOOLEAN)
+            ->setValue('1')
+            ->setDescription(Str::random(50))
+            ->get();
 
         $response = $this->laravelConfig->create($configItem);
 
@@ -93,9 +93,9 @@ class LaravelConfigTest extends TestCase
 
         $factory = new ConfigFactory($config);
         $configItem = $factory->setType(ConfigDataType::BOOLEAN)
-                              ->setValue('0')
-                              ->setDescription('updated-description')
-                              ->get();
+            ->setValue('0')
+            ->setDescription('updated-description')
+            ->get();
 
         $this->laravelConfig->update($config, $configItem);
 
@@ -273,7 +273,7 @@ class LaravelConfigTest extends TestCase
     {
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val' => [9 => [7,8,9], 2 => [7,8,9], 31 => [10,11,12]],
+            'val' => [9 => [7, 8, 9], 2 => [7, 8, 9], 31 => [10, 11, 12]],
             'type' => ConfigDataType::JSON,
         ]);
 
@@ -292,7 +292,7 @@ class LaravelConfigTest extends TestCase
         $config = factory(Config::class)->create([
             'name' => 'fatih.was.here',
             'val' => [ConfigDataType::DATE],
-            'type' => AsEnumCollection::class.':'.ConfigDataType::class,
+            'type' => AsEnumCollection::class . ':' . ConfigDataType::class,
         ]);
 
         $response = $this->laravelConfig->get($config->name);
