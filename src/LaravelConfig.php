@@ -159,8 +159,8 @@ class LaravelConfig
     private function fillColumns(Config $config, ConfigItem $configItem): Config
     {
         $config->name = $configItem->name;
-        $config->val = $configItem->val;
         $config->type = $configItem->type;
+        $config->val = $configItem->val;
         $config->description = $configItem->description;
         $config->tags = $configItem->tags;
 

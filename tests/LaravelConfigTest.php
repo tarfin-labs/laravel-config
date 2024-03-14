@@ -3,6 +3,9 @@
 namespace TarfinLabs\LaravelConfig\Tests;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
+use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
@@ -26,10 +29,10 @@ class LaravelConfigTest extends TestCase
     {
         $factory = new ConfigFactory();
         $configItem = $factory->setName(Str::random(5))
-                              ->setType(ConfigDataType::BOOLEAN)
-                              ->setValue('1')
-                              ->setDescription(Str::random(50))
-                              ->get();
+            ->setType(ConfigDataType::BOOLEAN)
+            ->setValue('1')
+            ->setDescription(Str::random(50))
+            ->get();
 
         $this->laravelConfig->create($configItem);
 
@@ -72,10 +75,10 @@ class LaravelConfigTest extends TestCase
 
         $factory = new ConfigFactory();
         $configItem = $factory->setName($config->name)
-                              ->setType(ConfigDataType::BOOLEAN)
-                              ->setValue('1')
-                              ->setDescription(Str::random(50))
-                              ->get();
+            ->setType(ConfigDataType::BOOLEAN)
+            ->setValue('1')
+            ->setDescription(Str::random(50))
+            ->get();
 
         $response = $this->laravelConfig->create($configItem);
 
@@ -90,9 +93,9 @@ class LaravelConfigTest extends TestCase
 
         $factory = new ConfigFactory($config);
         $configItem = $factory->setType(ConfigDataType::BOOLEAN)
-                              ->setValue('0')
-                              ->setDescription('updated-description')
-                              ->get();
+            ->setValue('0')
+            ->setDescription('updated-description')
+            ->get();
 
         $this->laravelConfig->update($config, $configItem);
 
@@ -256,7 +259,7 @@ class LaravelConfigTest extends TestCase
     {
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val' => '2024-02-29',
+            'val' => '2024-02-29 14:50:00',
             'type' => ConfigDataType::DATE,
         ]);
 
@@ -270,7 +273,7 @@ class LaravelConfigTest extends TestCase
     {
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
-            'val' => '{"9":[7,8,9],"2":[7,8,9],"31":[10,11,12]}',
+            'val' => [9 => [7, 8, 9], 2 => [7, 8, 9], 31 => [10, 11, 12]],
             'type' => ConfigDataType::JSON,
         ]);
 
@@ -281,5 +284,38 @@ class LaravelConfigTest extends TestCase
         $this->assertArrayHasKey(9, $response);
         $this->assertArrayHasKey(2, $response);
         $this->assertArrayHasKey(31, $response);
+    }
+
+    /** @test */
+    public function it_returns_in_caster_type_if_type_is_custom_caster_with_param(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'fatih.was.here',
+            'val' => [ConfigDataType::DATE],
+            'type' => AsEnumCollection::class.':'.ConfigDataType::class,
+        ]);
+
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertCount(1, $response);
+
+        $this->assertEquals([ConfigDataType::DATE], $response->toArray());
+    }
+
+    /** @test */
+    public function it_returns_in_caster_type_if_type_is_custom_caster(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'fatih.was.here',
+            'val' => [ConfigDataType::DATE->value],
+            'type' => AsCollection::class,
+        ]);
+
+        $response = $this->laravelConfig->get($config->name);
+
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertCount(1, $response);
+        $this->assertEquals([ConfigDataType::DATE->value], $response->toArray());
     }
 }

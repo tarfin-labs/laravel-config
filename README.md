@@ -180,6 +180,17 @@ delete_config('key');
 read_nested('foo.bar');
 ```
 
+### Custom Casters
+You can also custom casters:
+
+```php
+$config = factory(Config::class)->create([
+    'name' => 'custom-cast-config-name',
+    'val' => [ConfigDataType::DATE],
+    'type' => AsEnumCollection::class.':'.ConfigDataType::class,
+]);
+```
+
 ### Testing
 
 ``` bash
