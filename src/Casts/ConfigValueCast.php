@@ -54,7 +54,7 @@ class ConfigValueCast implements CastsAttributes
             case ConfigDataType::DATE_TIME->value:
                 return Carbon::parse($value)->format('Y-m-d H:i');
             case ConfigDataType::JSON->value:
-                return json_encode($value, true);
+                return json_encode($value);
             default:
                 $parts = explode(':', $type);
                 $casterClass = array_shift($parts);
