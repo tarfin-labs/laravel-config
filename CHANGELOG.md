@@ -3,6 +3,10 @@ All notable changes to `laravel-config` will be documented in this file.
 
 ## [Unreleased]
 
+## [5.1.0] - 2024-04-08
+
+- Laravel 11 and PHP 8.3 support added.
+
 ## [5.0.0] - 2024-03-05
 
 - Dropped support for PHP versions below 8.1.
