@@ -2,19 +2,22 @@
 
 namespace TarfinLabs\LaravelConfig\Config;
 
+use App\Models\Config as ConfigModel;
+use TarfinLabs\LaravelConfig\Config\ConfigItem;
+
 class ConfigFactory
 {
     /**
      * @var ConfigItem
      */
-    protected $configItem;
+    protected ConfigItem $configItem;
 
     /**
      * ConfigFactory constructor.
      *
-     * @param  Config|null  $config
+     * @param  ConfigModel|null  $config
      */
-    public function __construct(Config $config = null)
+    public function __construct(ConfigModel $config = null)
     {
         $this->configItem = new ConfigItem();
 

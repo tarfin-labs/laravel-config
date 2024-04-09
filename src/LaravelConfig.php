@@ -3,7 +3,7 @@
 namespace TarfinLabs\LaravelConfig;
 
 use Illuminate\Support\Collection;
-use TarfinLabs\LaravelConfig\Config\Config;
+use TarfinLabs\LaravelConfig\LaravelConfigFacade as ConfigFacade;
 use TarfinLabs\LaravelConfig\Config\ConfigItem;
 
 class LaravelConfig
@@ -15,15 +15,13 @@ class LaravelConfig
      * @param  $default
      * @return mixed
      */
-    public function get(string $name, $default = null)
+    public function get(string $name, $default = null): mixed
     {
-        if (! $this->has($name)) {
+        if (!$this->has($name)) {
             return $default;
         }
 
-        $config = Config::where('name', $name)->first();
-
-        return $config->val;
+        return ConfigFacade::get($name);
     }
 
     /**
@@ -34,37 +32,20 @@ class LaravelConfig
      */
     public function getNested(string $namespace): Collection
     {
-        $params = Config::where('name', 'LIKE', "{$namespace}.%")->get();
-
-        $config = collect();
-
-        foreach ($params as $param) {
-            $keys = explode('.', str_replace("{$namespace}.", '', $param->name));
-            $name = '';
-
-            foreach ($keys as $key) {
-                $name .= $key.'.';
-            }
-
-            $param->name = rtrim($name, '.');
-
-            $config->push($param);
-        }
-
-        return $config;
+        return ConfigFacade::getNested($namespace);
     }
 
     /**
      * @param  $tags
      * @return Collection
      */
-    public function getByTag($tags): ?Collection
+    public function getByTag($tags): Collection|null
     {
         if (! is_array($tags)) {
             $tags = [$tags];
         }
 
-        return Config::whereJsonContains('tags', $tags)->get();
+        return ConfigFacade::getByTag($tags);
     }
 
     /**
@@ -74,18 +55,13 @@ class LaravelConfig
      * @param  $value
      * @return mixed
      */
-    public function set(string $name, $value)
+    public function set(string $name, $value): mixed
     {
         if (! $this->has($name)) {
-            return;
+            return null;
         }
 
-        $config = Config::where('name', $name)->first();
-
-        $config->val = $value;
-        $config->save();
-
-        return $value;
+        return ConfigFacade::set($name, $value);
     }
 
     /**
@@ -96,7 +72,7 @@ class LaravelConfig
      */
     public function has(string $name): bool
     {
-        return Config::where('name', $name)->count() > 0;
+        return ConfigFacade::has($name);
     }
 
     /**
@@ -104,9 +80,9 @@ class LaravelConfig
      *
      * @return mixed
      */
-    public function all()
+    public function all(): mixed
     {
-        return Config::all();
+        return ConfigFacade::all();
     }
 
     /**
@@ -120,10 +96,7 @@ class LaravelConfig
         if ($this->has($configItem->name)) {
             return false;
         }
-
-        $config = new Config();
-
-        return $this->fillColumns($config, $configItem)->save();
+        return ConfigFacade::create( $configItem);
     }
 
     /**
@@ -133,37 +106,19 @@ class LaravelConfig
      * @param  ConfigItem  $configItem
      * @return mixed
      */
-    public function update(Config $config, ConfigItem $configItem)
+    public function update($config, ConfigItem $configItem): mixed
     {
-        return $this->fillColumns($config, $configItem)->save();
+        return ConfigFacade::update_config($configItem);
     }
 
     /**
      * Delete config parameter.
      *
-     * @param  Config  $config
+     * @param  $config
      * @return int
      */
-    public function delete(Config $config): int
+    public function delete($config): int
     {
-        return Config::destroy($config->id);
-    }
-
-    /**
-     * Fill config paremeter columns.
-     *
-     * @param  Config  $config
-     * @param  ConfigItem  $configItem
-     * @return Config
-     */
-    private function fillColumns(Config $config, ConfigItem $configItem): Config
-    {
-        $config->name = $configItem->name;
-        $config->val = $configItem->val;
-        $config->type = $configItem->type;
-        $config->description = $configItem->description;
-        $config->tags = $configItem->tags;
-
-        return $config;
+        return ConfigFacade::delete_config($config);
     }
 }

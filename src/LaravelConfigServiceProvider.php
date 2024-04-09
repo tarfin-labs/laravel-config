@@ -3,6 +3,7 @@
 namespace TarfinLabs\LaravelConfig;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Config as ConfigModel;
 
 class LaravelConfigServiceProvider extends ServiceProvider
 {
@@ -11,12 +12,11 @@ class LaravelConfigServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        /*
-         * Optional methods to load your package assets
-         */
+
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         if ($this->app->runningInConsole()) {
+
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('laravel-config.php'),
             ], 'laravel-config');
@@ -24,6 +24,13 @@ class LaravelConfigServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../database/factories/ConfigFactory.php' => database_path('factories/ConfigFactory.php'),
             ], 'laravel-config-factories');
+            $this->publishes([
+                __DIR__.'/Traits' => app_path('Traits'),
+                __DIR__.'/Models' => app_path('Models'),
+            ], 'laravel-config-models');
+            $this->commands([
+                Console\InstallCommand::class,
+            ]);
         }
     }
 
@@ -36,8 +43,8 @@ class LaravelConfigServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravel-config');
 
         // Register the main class to use with the facade
-        $this->app->singleton('laravel-config', function () {
-            return new LaravelConfig;
+        $this->app->singleton('laravel-config', static function () {
+            return new ConfigModel();
         });
     }
 }

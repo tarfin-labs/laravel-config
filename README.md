@@ -16,21 +16,27 @@ You can install the package via composer:
 ```bash
 composer require tarfin-labs/laravel-config
 ```
+Next, you MUST publish Models, Factories, and Traits 
+When updating you might need to rerun the installation command be warned this will overwrite any changes made to any of the published Models, Factories, and Traits
+
+```bash
+php artisan laravel-config:install
+```
 Next, you should publish the Laravel config migration file using the vendor:publish Artisan command.
 
-```
+```bash
 php artisan vendor:publish --provider="TarfinLabs\LaravelConfig\LaravelConfigServiceProvider" --tag="laravel-config"
 ```
 
 If you want to use Laravel Config database factory, you can publish it too, using the command:
 
-```
+```bash
 php artisan vendor:publish --provider="TarfinLabs\LaravelConfig\LaravelConfigServiceProvider" --tag="laravel-config-factories"
 ```
 
 Finally, you should run your database migrations:
 
-```
+```bash
 php artisan migrate
 ```
 
@@ -40,7 +46,7 @@ Simple usage example of laravel-config package in your Laravel app.
 
 Create new config parameter:
 
-``` php
+```php
 $factory = new ConfigFactory();
 $configItem = $factory->setName('key')
     ->setType(ConfigDataType::BOOLEAN)
@@ -54,37 +60,37 @@ LaravelConfig::create($configItem);
 
 Get value with config name:
 
-``` php
+```php
 LaravelConfig::get('key');
 ```
 
 Set value with config name and value:
 
-``` php
+```php
 LaravelConfig::set('key', 'value');
 ```
 
 Get all config parameters:
 
-``` php
+```php
 LaravelConfig::all();
 ```
 
 Get config items by tag:
 
-``` php
+```php
 LaravelConfig::getByTag('key');
 ```
 
 Check if the config exists:
 
-``` php
+```php
 LaravelConfig::has('key');
 ```
 
 Update config with new values:
 
-``` php
+```php
 $factory = new ConfigFactory($configId);
 $configItem = $factory->setName('updated-key')
     ->setType(ConfigDataType::BOOLEAN)
@@ -93,13 +99,13 @@ $configItem = $factory->setName('updated-key')
     ->setDescription('updated description')
     ->get();
 
-LaravelConfig::update($configItem);
+LaravelConfig::update_config($configItem);
 ```
 
 Remove config:
 
-``` php
-LaravelConfig::delete('key');
+```php
+LaravelConfig::delete_config('key');
 ```
 
 ### Nested Parameters
@@ -141,7 +147,7 @@ LaravelConfig::getNested('foo');
 ### Helpers
 You can also use helper functions:
 
-``` php
+```php
 // Creating config item
 $factory = new ConfigFactory();
 $configItem = $factory->setName('key')
@@ -182,7 +188,7 @@ read_nested('foo.bar');
 
 ### Testing
 
-``` bash
+```bash
 composer test
 ```
 

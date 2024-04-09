@@ -1,6 +1,6 @@
 <?php
 
-use TarfinLabs\LaravelConfig\Config\Config;
+use App\Models\Config as ConfigModel;
 use TarfinLabs\LaravelConfig\Config\ConfigItem;
 
 if (! function_exists('create_config')) {
@@ -10,7 +10,7 @@ if (! function_exists('create_config')) {
      * @param  ConfigItem  $configItem
      * @return mixed
      */
-    function create_config(ConfigItem $configItem)
+    function create_config(ConfigItem $configItem): mixed
     {
         return app('laravel-config')->create($configItem);
     }
@@ -23,9 +23,9 @@ if (! function_exists('read_config')) {
      * @param  string|null  $key
      * @return mixed
      */
-    function read_config(string $key = null)
+    function read_config(string|null $key = null): mixed
     {
-        if (is_null($key)) {
+        if ($key === null) {
             return app('laravel-config')->all();
         }
 
@@ -40,7 +40,7 @@ if (! function_exists('read_nested')) {
      * @param  string|null  $key
      * @return mixed
      */
-    function read_nested(string $key)
+    function read_nested(string $key): mixed
     {
         return app('laravel-config')->getNested($key);
     }
@@ -50,13 +50,12 @@ if (! function_exists('update_config')) {
     /**
      * Update given config item by given data.
      *
-     * @param  Config  $config
      * @param  ConfigItem  $configItem
      * @return mixed
      */
-    function update_config(Config $config, ConfigItem $configItem)
+    function update_config(ConfigItem $configItem): mixed
     {
-        return app('laravel-config')->update($config, $configItem);
+        return app('laravel-config')->update_config($configItem);
     }
 }
 
@@ -64,12 +63,12 @@ if (! function_exists('delete_config')) {
     /**
      * Delete given config item.
      *
-     * @param  Config  $config
+     * @param  ConfigModel  $config
      * @return mixed
      */
-    function delete_config(Config $config)
+    function delete_config(ConfigModel $config): mixed
     {
-        return app('laravel-config')->delete($config);
+        return app('laravel-config')->delete_config($config);
     }
 }
 
@@ -81,7 +80,7 @@ if (! function_exists('set_config_value')) {
      * @param  $value
      * @return mixed
      */
-    function set_config_value(string $key, $value)
+    function set_config_value(string $key, $value): mixed
     {
         return app('laravel-config')->set($key, $value);
     }
@@ -94,7 +93,7 @@ if (! function_exists('has_config')) {
      * @param  string  $key
      * @return bool
      */
-    function has_config(string $key)
+    function has_config(string $key): bool
     {
         return app('laravel-config')->has($key);
     }
