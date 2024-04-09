@@ -2,12 +2,11 @@
 
 namespace TarfinLabs\LaravelConfig\Tests;
 
+use App\Models\Config as ConfigModel;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use App\Models\Config as ConfigModel;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
 use TarfinLabs\LaravelConfig\Enums\ConfigDataType;
-
 
 class LaravelConfigTest extends TestCase
 {

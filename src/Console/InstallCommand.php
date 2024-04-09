@@ -42,5 +42,4 @@ class InstallCommand extends Command
 
         $this->info('Laravel-config installed successfully.');
     }
-
 }

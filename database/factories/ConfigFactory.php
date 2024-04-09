@@ -1,9 +1,9 @@
 <?php
 
-use Faker\Generator as Faker;
-// use Illuminate\Database\Eloquent\Factory;
-use Illuminate\Support\Carbon;
 use App\Models\Config as ConfigModel;
+// use Illuminate\Database\Eloquent\Factory;
+use Faker\Generator as Faker;
+use Illuminate\Support\Carbon;
 
 /* @var $factory Factory */
 

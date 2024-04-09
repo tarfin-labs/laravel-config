@@ -3,8 +3,8 @@
 namespace TarfinLabs\LaravelConfig;
 
 use Illuminate\Support\Collection;
-use TarfinLabs\LaravelConfig\LaravelConfigFacade as ConfigFacade;
 use TarfinLabs\LaravelConfig\Config\ConfigItem;
+use TarfinLabs\LaravelConfig\LaravelConfigFacade as ConfigFacade;
 
 class LaravelConfig
 {
@@ -17,7 +17,7 @@ class LaravelConfig
      */
     public function get(string $name, $default = null): mixed
     {
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             return $default;
         }
 
@@ -96,7 +96,8 @@ class LaravelConfig
         if ($this->has($configItem->name)) {
             return false;
         }
-        return ConfigFacade::create( $configItem);
+
+        return ConfigFacade::create($configItem);
     }
 
     /**

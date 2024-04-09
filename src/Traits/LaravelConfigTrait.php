@@ -7,7 +7,6 @@ use TarfinLabs\LaravelConfig\Config\ConfigItem;
 
 trait LaravelConfigTrait
 {
-
     /**
      * Get config by given name.
      *
@@ -17,7 +16,6 @@ trait LaravelConfigTrait
      */
     public function get(string $name, $default = null): mixed
     {
-
         if (! $this->has($name)) {
             return $default;
         }
@@ -26,10 +24,11 @@ trait LaravelConfigTrait
 
         return $config->val;
     }
+
     /**
      * Get config by given name.
      * this is an alias of the get function
-     * for consistency
+     * for consistency.
      *
      * @param  string  $name
      * @param  $default
@@ -102,11 +101,11 @@ trait LaravelConfigTrait
         return $value;
     }
 
-
     /**
      * Set config with given data.
      * this is an alias of the set function
-     * for consistency
+     * for consistency.
+     *
      * @param  string  $name
      * @param  $value
      * @return mixed
@@ -115,7 +114,6 @@ trait LaravelConfigTrait
     {
         return $this->set($name, $value);
     }
-
 
     /**
      * Check whether a config parameter is set.
@@ -131,7 +129,7 @@ trait LaravelConfigTrait
     /**
      * Check whether a config parameter is set.
      * this is an alias of the has function
-     * for consistency
+     * for consistency.
      *
      * @param  string  $name
      * @return bool
@@ -140,7 +138,6 @@ trait LaravelConfigTrait
     {
         return $this->has($name);
     }
-
 
     /**
      * Create a new config parameter.
@@ -160,7 +157,7 @@ trait LaravelConfigTrait
     /**
      * Create a new config parameter.
      * this is an alias of the create function
-     * for consistency
+     * for consistency.
      *
      * @param  ConfigItem  $configItem
      * @return bool
