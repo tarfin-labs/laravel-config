@@ -3,7 +3,6 @@
 namespace TarfinLabs\LaravelConfig\Config;
 
 use App\Models\Config as ConfigModel;
-use TarfinLabs\LaravelConfig\Config\ConfigItem;
 
 class ConfigFactory
 {

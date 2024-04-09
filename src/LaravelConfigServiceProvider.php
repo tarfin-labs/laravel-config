@@ -2,8 +2,8 @@
 
 namespace TarfinLabs\LaravelConfig;
 
-use Illuminate\Support\ServiceProvider;
 use App\Models\Config as ConfigModel;
+use Illuminate\Support\ServiceProvider;
 
 class LaravelConfigServiceProvider extends ServiceProvider
 {
@@ -12,11 +12,9 @@ class LaravelConfigServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         if ($this->app->runningInConsole()) {
-
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('laravel-config.php'),
             ], 'laravel-config');

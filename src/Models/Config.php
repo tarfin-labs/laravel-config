@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Traits\LaravelConfigTrait;
+use Illuminate\Database\Eloquent\Model;
 use TarfinLabs\LaravelConfig\Casts\ConfigValueCast;
 
 class Config extends Model
