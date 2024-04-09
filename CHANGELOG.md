@@ -1,9 +1,7 @@
 # Changelog
 All notable changes to `laravel-config` will be documented in this file.
 
-## [Unreleased]
-
-## [5.1.1-EPF] -2024-04-09
+## [Unreleased] - 2024-04-09
 
 - ### Braking Change: Made the Models and Traits Publishable, so you can add SoftDeletes, auditing, and/or caching if you want (YOU MUST RUN THE INSTALLATION COMMAND)
 - ### Braking Change: Check your Namespaces 
