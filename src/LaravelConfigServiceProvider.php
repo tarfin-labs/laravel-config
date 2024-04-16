@@ -28,6 +28,8 @@ class LaravelConfigServiceProvider extends ServiceProvider
             ], 'laravel-config-models');
             $this->commands([
                 Console\InstallCommand::class,
+                Console\SetCommand::class,
+                Console\GetCommand::class,
             ]);
         }
     }
