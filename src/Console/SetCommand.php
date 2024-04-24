@@ -20,7 +20,6 @@ class SetCommand extends Command
      */
     public function handle()
     {
-
         LaravelConfig::set_config($this->argument('key'), $this->argument('value'));
     }
 }
