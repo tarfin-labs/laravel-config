@@ -14,6 +14,9 @@ All notable changes to `laravel-config` will be documented in this file.
 - Because of the Braking Changes I also added a `get_config`, `set_config`, `has_config`, and `create_config` aliases for consistency
 - NON Braking Change: Removed the `all` function as it's not needed anymore since it's a function of a Model
 - I'm adding more functions to another Trait that can be added by including it in the Model these are all traits that I've found useful
+- Added comands to `get_config` and `set_config` from the console
+- Added more datatypes
+
 
 ## [5.1.0] - 2024-04-08
 
