@@ -1,12 +1,15 @@
 <?php
 
-namespace TarfinLabs\LaravelConfig\Config;
+namespace App\Models;
 
+use App\Traits\LaravelConfigTrait;
 use Illuminate\Database\Eloquent\Model;
 use TarfinLabs\LaravelConfig\Casts\ConfigValueCast;
 
 class Config extends Model
 {
+    use LaravelConfigTrait;
+
     protected $table = 'config';
 
     protected $guarded = [];

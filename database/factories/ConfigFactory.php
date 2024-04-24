@@ -1,13 +1,13 @@
 <?php
 
+use App\Models\Config as ConfigModel;
+// use Illuminate\Database\Eloquent\Factory;
 use Faker\Generator as Faker;
-use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Carbon;
-use TarfinLabs\LaravelConfig\Config\Config;
 
 /* @var $factory Factory */
 
-$factory->define(Config::class, function (Faker $faker, array $attributes = []) {
+$factory->define(ConfigModel::class, function (Faker $faker, array $attributes = []) {
     return [
         'name' => $attributes['name'] ?? $faker->word().$faker->asciify('*****'),
         'type' => $attributes['type'] ?? $faker->randomElement(['boolean', 'text']),

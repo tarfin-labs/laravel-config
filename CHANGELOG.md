@@ -1,7 +1,22 @@
 # Changelog
 All notable changes to `laravel-config` will be documented in this file.
 
-## [Unreleased]
+## [Unreleased] - 2024-04-09
+
+- ### Braking Change: Made the Models and Traits Publishable, so you can add SoftDeletes, auditing, and/or caching if you want (YOU MUST RUN THE INSTALLATION COMMAND)
+- ### Braking Change: Check your Namespaces 
+- Moved the config functions to a Trait so adding functions is as simple as editing the published Trait or adding another Trait
+- I left the original `LaravelConfig` class as an alies of the Model, but it needs more testing
+- ### Braking Change: The Update function needed to be renamed from `update` to `update_config`
+- ### Braking Change: The Update function Only takes one parameter just the `ConfigItem`
+- ### Braking Change: The `update_config` helper Only takes one parameter just the `ConfigItem`
+- ### Braking Change: The Delete function needed to be renamed from `delete` to `delete_config`
+- Because of the Braking Changes I also added a `get_config`, `set_config`, `has_config`, and `create_config` aliases for consistency
+- NON Braking Change: Removed the `all` function as it's not needed anymore since it's a function of a Model
+- I'm adding more functions to another Trait that can be added by including it in the Model these are all traits that I've found useful
+- Added comands to `get_config` and `set_config` from the console
+- Added more datatypes
+
 
 ## [5.1.0] - 2024-04-08
 
