@@ -20,6 +20,6 @@ class GetCommand extends Command
     public function handle()
     {
         $value = LaravelConfig::get_config($this->argument('key'));
-        $this->line(print_r($value, true));
+        $this->line($value);
     }
 }
