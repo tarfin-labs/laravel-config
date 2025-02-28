@@ -23,7 +23,7 @@ if (! function_exists('read_config')) {
      * @param  string|null  $key
      * @return mixed
      */
-    function read_config(string $key = null)
+    function read_config(?string $key = null)
     {
         if (is_null($key)) {
             return app('laravel-config')->all();
