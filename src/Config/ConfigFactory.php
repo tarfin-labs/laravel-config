@@ -14,7 +14,7 @@ class ConfigFactory
      *
      * @param  Config|null  $config
      */
-    public function __construct(Config $config = null)
+    public function __construct(?Config $config = null)
     {
         $this->configItem = new ConfigItem();
 
