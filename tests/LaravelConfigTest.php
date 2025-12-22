@@ -318,4 +318,87 @@ class LaravelConfigTest extends TestCase
         $this->assertCount(1, $response);
         $this->assertEquals([ConfigDataType::DATE->value], $response->toArray());
     }
+
+    /** @test */
+    public function container_binding_resolves_to_config_manager_instance(): void
+    {
+        $resolved = app('laravel-config');
+
+        $this->assertInstanceOf(ConfigManager::class, $resolved);
+    }
+
+    /** @test */
+    public function container_binding_is_singleton(): void
+    {
+        $first = app('laravel-config');
+        $second = app('laravel-config');
+
+        $this->assertSame($first, $second);
+    }
+
+    /** @test */
+    public function helper_read_config_returns_all_when_no_key(): void
+    {
+        factory(Config::class, 3)->create();
+
+        $result = read_config();
+
+        $this->assertCount(3, $result);
+    }
+
+    /** @test */
+    public function helper_read_config_returns_value_by_key(): void
+    {
+        $config = factory(Config::class)->create([
+            'name' => 'test_key',
+            'val' => 'test_value',
+        ]);
+
+        $result = read_config('test_key');
+
+        $this->assertEquals('test_value', $result);
+    }
+
+    /** @test */
+    public function helper_has_config_returns_true_for_existing_key(): void
+    {
+        factory(Config::class)->create(['name' => 'existing_key']);
+
+        $this->assertTrue(has_config('existing_key'));
+    }
+
+    /** @test */
+    public function helper_has_config_returns_false_for_non_existing_key(): void
+    {
+        $this->assertFalse(has_config('non_existing_key'));
+    }
+
+    /** @test */
+    public function helper_create_config_creates_new_config(): void
+    {
+        $configItem = (new ConfigFactory())
+            ->setName('new_config')
+            ->setType(ConfigDataType::BOOLEAN)
+            ->setValue(true)
+            ->get();
+
+        create_config($configItem);
+
+        $this->assertDatabaseHas(config('laravel-config.table'), [
+            'name' => 'new_config',
+        ]);
+    }
+
+    /** @test */
+    public function helper_set_config_value_updates_existing_config(): void
+    {
+        factory(Config::class)->create([
+            'name' => 'update_test',
+            'val' => 'old_value',
+        ]);
+
+        set_config_value('update_test', 'new_value');
+
+        $this->assertEquals('new_value', read_config('update_test'));
+    }
 }
