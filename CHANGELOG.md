@@ -8,6 +8,10 @@ All notable changes to `laravel-config` will be documented in this file.
 ### Breaking Changes
 - Renamed `LaravelConfig` class to `ConfigManager` to prevent confusion with the facade.
 - Moved `LaravelConfigFacade` to `Facades/LaravelConfig` following Laravel convention.
+- Dropped Laravel 8 support (due to security vulnerabilities in Laravel 8).
+
+### Added
+- PHP 8.5 support.
 
 ### Changed
 - Facade is now located at `TarfinLabs\LaravelConfig\Facades\LaravelConfig`.
