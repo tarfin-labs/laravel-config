@@ -16,7 +16,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
         Schema::dropAllTables();
 
         $this->artisan('migrate', [
-            '--database' => 'mysql',
             '--realpath' => realpath(__DIR__.'/../database/migrations'),
         ]);
     }
