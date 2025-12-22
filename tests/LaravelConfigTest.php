@@ -9,8 +9,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
-use TarfinLabs\LaravelConfig\Enums\ConfigDataType;
 use TarfinLabs\LaravelConfig\ConfigManager;
+use TarfinLabs\LaravelConfig\Enums\ConfigDataType;
 
 class LaravelConfigTest extends TestCase
 {
