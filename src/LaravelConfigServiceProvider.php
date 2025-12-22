@@ -37,7 +37,7 @@ class LaravelConfigServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('laravel-config', function () {
-            return new LaravelConfig;
+            return new ConfigManager;
         });
     }
 }
