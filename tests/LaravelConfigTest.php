@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\Test;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
 use TarfinLabs\LaravelConfig\ConfigManager;
@@ -24,7 +25,8 @@ class LaravelConfigTest extends TestCase
         $this->laravelConfig = new ConfigManager();
     }
 
-    public function test_it_create_a_new_config_parameter(): void
+    #[Test]
+    public function it_create_a_new_config_parameter(): void
     {
         $factory = new ConfigFactory();
         $configItem = $factory->setName(Str::random(5))
@@ -43,7 +45,8 @@ class LaravelConfigTest extends TestCase
         ]);
     }
 
-    public function test_it_create_a_new_config_parameter_with_tag(): void
+    #[Test]
+    public function it_create_a_new_config_parameter_with_tag(): void
     {
         $factory = new ConfigFactory();
         $configItem = $factory->setName(Str::random(5))
@@ -65,7 +68,8 @@ class LaravelConfigTest extends TestCase
         $this->assertTrue($this->laravelConfig->getByTag(['system'])->count() > 0);
     }
 
-    public function test_it_does_not_create_a_config_parameter_with_the_same_name(): void
+    #[Test]
+    public function it_does_not_create_a_config_parameter_with_the_same_name(): void
     {
         $config = factory(Config::class)->create();
         $this->assertDatabaseHas(config('laravel-config.table'), ['name' => $config->name]);
@@ -82,7 +86,8 @@ class LaravelConfigTest extends TestCase
         $this->assertFalse($response);
     }
 
-    public function test_it_updates_existing_config_parameter(): void
+    #[Test]
+    public function it_updates_existing_config_parameter(): void
     {
         $config = factory(Config::class)->create(['val' => '0']);
         $this->assertDatabaseHas(config('laravel-config.table'), ['name' => $config->name, 'val' => $config->val]);
@@ -103,7 +108,8 @@ class LaravelConfigTest extends TestCase
         ]);
     }
 
-    public function test_it_deletes_an_existing_config_parameter(): void
+    #[Test]
+    public function it_deletes_an_existing_config_parameter(): void
     {
         $name = 'dummy-name';
         $config = factory(Config::class)->create(['name' => $name]);
@@ -114,7 +120,8 @@ class LaravelConfigTest extends TestCase
         $this->assertDatabaseMissing(config('laravel-config.table'), ['name' => $name]);
     }
 
-    public function test_it_sets_a_value_to_existing_config_parameter(): void
+    #[Test]
+    public function it_sets_a_value_to_existing_config_parameter(): void
     {
         $config = factory(Config::class)->create(['val' => '1']);
 
@@ -123,14 +130,16 @@ class LaravelConfigTest extends TestCase
         $this->assertEquals('0', $response);
     }
 
-    public function test_it_does_not_set_a_value_to_not_existing_config_parameter(): void
+    #[Test]
+    public function it_does_not_set_a_value_to_not_existing_config_parameter(): void
     {
         $response = $this->laravelConfig->set('dummy', '1');
 
         $this->assertNull($response);
     }
 
-    public function test_it_returns_a_config_parameter_value_by_given_name(): void
+    #[Test]
+    public function it_returns_a_config_parameter_value_by_given_name(): void
     {
         $config = factory(Config::class)->create();
 
@@ -139,7 +148,8 @@ class LaravelConfigTest extends TestCase
         $this->assertEquals($config->val, $response);
     }
 
-    public function test_it_returns_config_collection_by_tag_name(): void
+    #[Test]
+    public function it_returns_config_collection_by_tag_name(): void
     {
         factory(Config::class, 3)
             ->create();
@@ -153,14 +163,16 @@ class LaravelConfigTest extends TestCase
         $this->assertEquals($config->count(), $response->count());
     }
 
-    public function test_it_does_not_return_a_not_existing_config_parameter(): void
+    #[Test]
+    public function it_does_not_return_a_not_existing_config_parameter(): void
     {
         $response = $this->laravelConfig->get('dummy');
 
         $this->assertNull($response);
     }
 
-    public function test_it_returns_if_a_config_parameter_is_exist(): void
+    #[Test]
+    public function it_returns_if_a_config_parameter_is_exist(): void
     {
         $name = 'dummy';
         $response = $this->laravelConfig->has($name);
@@ -171,7 +183,8 @@ class LaravelConfigTest extends TestCase
         $this->assertTrue($response);
     }
 
-    public function test_it_returns_all_config_parameters(): void
+    #[Test]
+    public function it_returns_all_config_parameters(): void
     {
         factory(Config::class)->times(2)->create();
 
@@ -180,7 +193,8 @@ class LaravelConfigTest extends TestCase
         $this->assertEquals(2, $response->count());
     }
 
-    public function test_it_returns_nested_config_parameters(): void
+    #[Test]
+    public function it_returns_nested_config_parameters(): void
     {
         factory(Config::class)->create([
             'name' => 'foo.bar',
@@ -199,7 +213,8 @@ class LaravelConfigTest extends TestCase
         $this->assertEquals('baz', $response->last()->name);
     }
 
-    public function test_it_returns_boolean_value_for_boolean_type_config_parameter_if_exists(): void
+    #[Test]
+    public function it_returns_boolean_value_for_boolean_type_config_parameter_if_exists(): void
     {
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
@@ -212,7 +227,8 @@ class LaravelConfigTest extends TestCase
         $this->assertTrue($response);
     }
 
-    public function test_it_returns_integer_value_for_integer_type_config_parameter_if_exists(): void
+    #[Test]
+    public function it_returns_integer_value_for_integer_type_config_parameter_if_exists(): void
     {
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
@@ -225,7 +241,8 @@ class LaravelConfigTest extends TestCase
         $this->assertIsInt($response);
     }
 
-    public function test_it_returns_datetime_value_for_datetime_type_config_parameter_if_exists(): void
+    #[Test]
+    public function it_returns_datetime_value_for_datetime_type_config_parameter_if_exists(): void
     {
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
@@ -238,7 +255,8 @@ class LaravelConfigTest extends TestCase
         $this->assertInstanceOf(Carbon::class, $response);
     }
 
-    public function test_it_returns_date_value_for_date_type_config_parameter_if_exists(): void
+    #[Test]
+    public function it_returns_date_value_for_date_type_config_parameter_if_exists(): void
     {
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
@@ -251,7 +269,8 @@ class LaravelConfigTest extends TestCase
         $this->assertInstanceOf(Carbon::class, $response);
     }
 
-    public function test_it_returns_json_value_for_json_type_config_parameter_if_exists(): void
+    #[Test]
+    public function it_returns_json_value_for_json_type_config_parameter_if_exists(): void
     {
         $config = factory(Config::class)->create([
             'name' => 'yunus.was.here',
@@ -268,7 +287,8 @@ class LaravelConfigTest extends TestCase
         $this->assertArrayHasKey(31, $response);
     }
 
-    public function test_it_returns_in_caster_type_if_type_is_custom_caster_with_param(): void
+    #[Test]
+    public function it_returns_in_caster_type_if_type_is_custom_caster_with_param(): void
     {
         $config = factory(Config::class)->create([
             'name' => 'fatih.was.here',
@@ -284,7 +304,8 @@ class LaravelConfigTest extends TestCase
         $this->assertEquals([ConfigDataType::DATE], $response->toArray());
     }
 
-    public function test_it_returns_in_caster_type_if_type_is_custom_caster(): void
+    #[Test]
+    public function it_returns_in_caster_type_if_type_is_custom_caster(): void
     {
         $config = factory(Config::class)->create([
             'name' => 'fatih.was.here',
@@ -299,14 +320,16 @@ class LaravelConfigTest extends TestCase
         $this->assertEquals([ConfigDataType::DATE->value], $response->toArray());
     }
 
-    public function test_container_binding_resolves_to_config_manager_instance(): void
+    #[Test]
+    public function container_binding_resolves_to_config_manager_instance(): void
     {
         $resolved = app('laravel-config');
 
         $this->assertInstanceOf(ConfigManager::class, $resolved);
     }
 
-    public function test_container_binding_is_singleton(): void
+    #[Test]
+    public function container_binding_is_singleton(): void
     {
         $first = app('laravel-config');
         $second = app('laravel-config');
@@ -314,7 +337,8 @@ class LaravelConfigTest extends TestCase
         $this->assertSame($first, $second);
     }
 
-    public function test_helper_read_config_returns_all_when_no_key(): void
+    #[Test]
+    public function helper_read_config_returns_all_when_no_key(): void
     {
         factory(Config::class, 3)->create();
 
@@ -323,7 +347,8 @@ class LaravelConfigTest extends TestCase
         $this->assertCount(3, $result);
     }
 
-    public function test_helper_read_config_returns_value_by_key(): void
+    #[Test]
+    public function helper_read_config_returns_value_by_key(): void
     {
         $config = factory(Config::class)->create([
             'name' => 'test_key',
@@ -335,19 +360,22 @@ class LaravelConfigTest extends TestCase
         $this->assertEquals('test_value', $result);
     }
 
-    public function test_helper_has_config_returns_true_for_existing_key(): void
+    #[Test]
+    public function helper_has_config_returns_true_for_existing_key(): void
     {
         factory(Config::class)->create(['name' => 'existing_key']);
 
         $this->assertTrue(has_config('existing_key'));
     }
 
-    public function test_helper_has_config_returns_false_for_non_existing_key(): void
+    #[Test]
+    public function helper_has_config_returns_false_for_non_existing_key(): void
     {
         $this->assertFalse(has_config('non_existing_key'));
     }
 
-    public function test_helper_create_config_creates_new_config(): void
+    #[Test]
+    public function helper_create_config_creates_new_config(): void
     {
         $configItem = (new ConfigFactory())
             ->setName('new_config')
@@ -362,7 +390,8 @@ class LaravelConfigTest extends TestCase
         ]);
     }
 
-    public function test_helper_set_config_value_updates_existing_config(): void
+    #[Test]
+    public function helper_set_config_value_updates_existing_config(): void
     {
         factory(Config::class)->create([
             'name' => 'update_test',
