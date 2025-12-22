@@ -9,9 +9,12 @@ All notable changes to `laravel-config` will be documented in this file.
 - Renamed `LaravelConfig` class to `ConfigManager` to prevent confusion with the facade.
 - Moved `LaravelConfigFacade` to `Facades/LaravelConfig` following Laravel convention.
 - Dropped Laravel 8 and 9 support (due to security vulnerabilities).
+- Removed `laravel/legacy-factories` dependency - now uses modern class-based factories.
+- Factory publishing is no longer available (factories are now auto-loaded from the package).
 
 ### Added
 - PHP 8.5 support.
+- Modern class-based `ConfigFactory` with `HasFactory` trait support (fixes #8).
 
 ### Changed
 - Facade is now located at `TarfinLabs\LaravelConfig\Facades\LaravelConfig`.
@@ -31,6 +34,17 @@ $config = new ConfigManager();
 ```
 
 If you were using the facade or helper functions, no changes are required.
+
+If you were using the old factory syntax in tests:
+```php
+// Before (legacy factory)
+factory(Config::class)->create();
+factory(Config::class, 3)->create();
+
+// After (modern factory)
+Config::factory()->create();
+Config::factory()->count(3)->create();
+```
 
 ## [5.2.0] - 2025-02-21
 - Laravel 12 and PHP 8.4 support added.
