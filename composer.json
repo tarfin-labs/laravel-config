@@ -67,7 +67,7 @@
                 "TarfinLabs\\LaravelConfig\\LaravelConfigServiceProvider"
             ],
             "aliases": {
-                "LaravelConfig": "TarfinLabs\\LaravelConfig\\LaravelConfigFacade"
+                "LaravelConfig": "TarfinLabs\\LaravelConfig\\Facades\\LaravelConfig"
             }
         }
     }
