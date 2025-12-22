@@ -10,18 +10,18 @@ use Illuminate\Support\Str;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigFactory;
 use TarfinLabs\LaravelConfig\Enums\ConfigDataType;
-use TarfinLabs\LaravelConfig\LaravelConfig;
+use TarfinLabs\LaravelConfig\ConfigManager;
 
 class LaravelConfigTest extends TestCase
 {
-    /** @var LaravelConfig */
+    /** @var ConfigManager */
     protected $laravelConfig;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->laravelConfig = new LaravelConfig();
+        $this->laravelConfig = new ConfigManager();
     }
 
     /** @test */
