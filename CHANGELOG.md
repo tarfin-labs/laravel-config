@@ -3,6 +3,31 @@ All notable changes to `laravel-config` will be documented in this file.
 
 ## [Unreleased]
 
+## [6.0.0] - 2025-12-22
+
+### Breaking Changes
+- Renamed `LaravelConfig` class to `ConfigManager` to prevent confusion with the facade.
+- Moved `LaravelConfigFacade` to `Facades/LaravelConfig` following Laravel convention.
+
+### Changed
+- Facade is now located at `TarfinLabs\LaravelConfig\Facades\LaravelConfig`.
+- The facade no longer uses the `Facade` suffix, following Laravel's naming convention.
+- Added proper `@method` docblocks to the facade for better IDE autocompletion.
+
+### Migration Guide
+If you were directly importing the `LaravelConfig` class:
+```php
+// Before
+use TarfinLabs\LaravelConfig\LaravelConfig;
+$config = new LaravelConfig();
+
+// After
+use TarfinLabs\LaravelConfig\ConfigManager;
+$config = new ConfigManager();
+```
+
+If you were using the facade or helper functions, no changes are required.
+
 ## [5.2.0] - 2025-02-21
 - Laravel 12 and PHP 8.4 support added.
 
