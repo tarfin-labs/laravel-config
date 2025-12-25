@@ -6,12 +6,11 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Castable;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Contracts\Database\Eloquent\CastsInboundAttributes;
-use Illuminate\Database\Eloquent\Model;
 use TarfinLabs\LaravelConfig\Enums\ConfigDataType;
 
 class ConfigValueCast implements CastsAttributes
 {
-    public function get(Model $model, string $key, mixed $value, array $attributes)
+    public function get($model, string $key, mixed $value, array $attributes)
     {
         switch ($attributes['type']) {
             case ConfigDataType::BOOLEAN->value:
@@ -43,7 +42,7 @@ class ConfigValueCast implements CastsAttributes
         }
     }
 
-    public function set(Model $model, string $key, mixed $value, array $attributes)
+    public function set($model, string $key, mixed $value, array $attributes)
     {
         $type = $attributes['type']?->value ?? $attributes['type'] ?? null;
 
