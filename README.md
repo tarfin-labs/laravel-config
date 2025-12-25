@@ -1,205 +1,330 @@
 ![Laravel Config Logo](https://s3-eu-west-1.amazonaws.com/media.tarfin.com/assets/logo-config.svg)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tarfin-labs/laravel-config.svg?style=flat-square)](https://packagist.org/packages/tarfin-labs/laravel-config)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tarfin-labs/laravel-config/tests?label=tests)
-[![Quality Score](https://img.shields.io/scrutinizer/g/tarfin-labs/laravel-config.svg?style=flat-square)](https://scrutinizer-ci.com/g/tarfin-labs/laravel-config)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/tarfin-labs/laravel-config/tests.yml?branch=master&label=tests&style=flat-square)](https://github.com/tarfin-labs/laravel-config/actions/workflows/tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/tarfin-labs/laravel-config.svg?style=flat-square)](https://packagist.org/packages/tarfin-labs/laravel-config)
 
 ## Introduction
 
-Laravel config provides a simple configuration system for your Laravel application. 
+Laravel Config provides a database-backed configuration management system for your Laravel application. Store, retrieve, and manage configuration parameters with automatic type casting, tagging support, and nested namespaces.
+
+**Key Features:**
+- Database-backed configuration storage
+- Automatic type casting (boolean, integer, date, datetime, JSON, custom casters)
+- Tag-based organization and retrieval
+- Nested namespace support (e.g., `app.mail.host`)
+- Facade and helper function access
+- Laravel 10, 11, and 12 support
+
+## Version Compatibility
+
+### v6.x (Latest)
+
+| Requirement | Versions |
+|-------------|----------|
+| PHP | 8.1, 8.2, 8.3, 8.4, 8.5 |
+| Laravel | 10, 11, 12 |
+| PHPUnit | 10, 11, 12 |
+
+### v5.x (Maintenance)
+
+| Requirement | Versions |
+|-------------|----------|
+| PHP | 8.1, 8.2, 8.3, 8.4, 8.5 |
+| Laravel | 10, 11, 12 |
+| PHPUnit | 9.5, 10, 11, 12 |
 
 ## Installation
 
-You can install the package via composer:
+Install the package via Composer:
 
 ```bash
 composer require tarfin-labs/laravel-config
 ```
-Next, you should publish the Laravel config migration file using the vendor:publish Artisan command.
 
-```
+Publish the configuration and migration files:
+
+```bash
 php artisan vendor:publish --provider="TarfinLabs\LaravelConfig\LaravelConfigServiceProvider" --tag="laravel-config"
 ```
 
-If you want to use Laravel Config database factory, you can publish it too, using the command:
+Run the migrations:
 
-```
-php artisan vendor:publish --provider="TarfinLabs\LaravelConfig\LaravelConfigServiceProvider" --tag="laravel-config-factories"
-```
-
-Finally, you should run your database migrations:
-
-```
+```bash
 php artisan migrate
 ```
 
-## Documentation
+## Quick Start
 
-Simple usage example of laravel-config package in your Laravel app.
+```php
+use TarfinLabs\LaravelConfig\Facades\LaravelConfig;
+use TarfinLabs\LaravelConfig\Config\ConfigFactory;
+use TarfinLabs\LaravelConfig\Enums\ConfigDataType;
 
-Create new config parameter:
-
-``` php
-$factory = new ConfigFactory();
-$configItem = $factory->setName('key')
+// Create a config parameter
+$configItem = (new ConfigFactory())
+    ->setName('app.debug')
     ->setType(ConfigDataType::BOOLEAN)
-    ->setValue('1')
-    ->setTags(['system'])//optional
-    ->setDescription('Lorem ipsum dolor sit amet')
+    ->setValue(true)
+    ->get();
+
+LaravelConfig::create($configItem);
+
+// Get a config value
+$debug = LaravelConfig::get('app.debug'); // returns true (boolean)
+
+// Update a config value
+LaravelConfig::set('app.debug', false);
+
+// Check if config exists
+if (LaravelConfig::has('app.debug')) {
+    // ...
+}
+```
+
+## Usage
+
+### Using the Facade
+
+```php
+use TarfinLabs\LaravelConfig\Facades\LaravelConfig;
+
+// Get a single config value
+LaravelConfig::get('key');
+LaravelConfig::get('key', 'default'); // with default value
+
+// Set a config value
+LaravelConfig::set('key', 'value');
+
+// Check existence
+LaravelConfig::has('key');
+
+// Get all configs
+LaravelConfig::all();
+```
+
+### Creating Config Parameters
+
+Use `ConfigFactory` to build configuration items:
+
+```php
+use TarfinLabs\LaravelConfig\Config\ConfigFactory;
+use TarfinLabs\LaravelConfig\Enums\ConfigDataType;
+
+$configItem = (new ConfigFactory())
+    ->setName('mail.host')
+    ->setType(ConfigDataType::STRING)
+    ->setValue('smtp.example.com')
+    ->setDescription('SMTP server hostname')
+    ->setTags(['mail', 'system'])
     ->get();
 
 LaravelConfig::create($configItem);
 ```
 
-Get value with config name:
+### Supported Data Types
 
-``` php
-LaravelConfig::get('key');
+The `ConfigDataType` enum provides the following types with automatic casting:
+
+| Type | Storage | Retrieved As |
+|------|---------|--------------|
+| `BOOLEAN` | `'1'` or `'0'` | `true` or `false` |
+| `INTEGER` | `'123'` | `123` |
+| `DATE` | `'2024-12-25'` | Carbon instance |
+| `DATE_TIME` | `'2024-12-25 14:30'` | Carbon instance |
+| `JSON` | JSON string | Array |
+
+**Custom Casters:**
+
+You can use Laravel's custom cast classes:
+
+```php
+use Illuminate\Database\Eloquent\Casts\AsCollection;
+use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
+
+$configItem = (new ConfigFactory())
+    ->setName('allowed.statuses')
+    ->setType(AsEnumCollection::class . ':' . StatusEnum::class)
+    ->setValue([StatusEnum::Active, StatusEnum::Pending])
+    ->get();
 ```
 
-Set value with config name and value:
+### Working with Tags
 
-``` php
-LaravelConfig::set('key', 'value');
-```
+Organize configs with tags and retrieve them by tag:
 
-Get all config parameters:
-
-``` php
-LaravelConfig::all();
-```
-
-Get config items by tag:
-
-``` php
-LaravelConfig::getByTag('key');
-```
-
-Check if the config exists:
-
-``` php
-LaravelConfig::has('key');
-```
-
-Update config with new values:
-
-``` php
-$factory = new ConfigFactory($configId);
-$configItem = $factory->setName('updated-key')
-    ->setType(ConfigDataType::BOOLEAN)
-    ->setValue('0')
-    ->setTags(['system'])//optional
-    ->setDescription('updated description')
+```php
+// Create configs with tags
+$dbHost = (new ConfigFactory())
+    ->setName('db.host')
+    ->setValue('localhost')
+    ->setTags(['database', 'connection'])
     ->get();
 
-LaravelConfig::update($configItem);
-```
+$dbPort = (new ConfigFactory())
+    ->setName('db.port')
+    ->setValue('3306')
+    ->setTags(['database', 'connection'])
+    ->get();
 
-Remove config:
+LaravelConfig::create($dbHost);
+LaravelConfig::create($dbPort);
 
-``` php
-LaravelConfig::delete('key');
+// Get all configs with a specific tag
+$databaseConfigs = LaravelConfig::getByTag('database');
+
+// Get configs matching multiple tags
+$connectionConfigs = LaravelConfig::getByTag(['database', 'connection']);
 ```
 
 ### Nested Parameters
 
-Let's say you have a config parameters named `foo.bar` and `foo.baz`. You can get all parameters under `foo` namespace using `getNested()` method.
-
-#### Usage:
+Group related configs using dot notation and retrieve them by namespace:
 
 ```php
-LaravelConfig::getNested('foo');
+// Create nested configs
+LaravelConfig::create((new ConfigFactory())->setName('mail.host')->setValue('smtp.example.com')->get());
+LaravelConfig::create((new ConfigFactory())->setName('mail.port')->setValue('587')->get());
+LaravelConfig::create((new ConfigFactory())->setName('mail.encryption')->setValue('tls')->get());
+
+// Get all configs under 'mail' namespace
+$mailConfigs = LaravelConfig::getNested('mail');
+
+// Returns a Collection with normalized names:
+// [
+//     ConfigItem { name: 'host', val: 'smtp.example.com' },
+//     ConfigItem { name: 'port', val: '587' },
+//     ConfigItem { name: 'encryption', val: 'tls' },
+// ]
 ```
 
-#### Output: `Illuminate\Support\Collection`
+### Updating and Deleting
+
 ```php
-=> Illuminate\Support\Collection {#3048
-     all: [
-       TarfinLabs\LaravelConfig\Config\Config {#3097
-         id: 1,
-         name: "bar",
-         type: "boolean",
-         val: "0",
-         description: null,
-         created_at: "2021-05-06 11:35:05",
-         updated_at: "2021-05-06 11:35:05",
-       },
-       TarfinLabs\LaravelConfig\Config\Config {#3099
-         id: 2,
-         name: "baz",
-         type: "boolean",
-         val: "1",
-         description: null,
-         created_at: "2021-05-06 11:03:48",
-         updated_at: "2021-05-06 11:03:48",
-       },
-     ],
-   }
-```
+use TarfinLabs\LaravelConfig\Config\Config;
 
-### Helpers
-You can also use helper functions:
+// Update using set() for simple value changes
+LaravelConfig::set('app.name', 'New App Name');
 
-``` php
-// Creating config item
-$factory = new ConfigFactory();
-$configItem = $factory->setName('key')
-    ->setType(ConfigDataType::BOOLEAN)
-    ->setValue('1')
-    ->setTags(['system'])//optional
-    ->setDescription('Lorem ipsum dolor sit amet')
+// Full update with ConfigFactory
+$config = Config::where('name', 'app.name')->first();
+$configItem = (new ConfigFactory($config))
+    ->setValue('Updated Name')
+    ->setDescription('Updated description')
     ->get();
 
+LaravelConfig::update($config, $configItem);
+
+// Delete a config
+$config = Config::where('name', 'obsolete.config')->first();
+LaravelConfig::delete($config);
+```
+
+## Helper Functions
+
+All facade methods are available as helper functions:
+
+```php
+// Create
 create_config($configItem);
 
-// Reading config item
-read_config('key');
+// Read
+read_config('key');           // Get single value
+read_config();                // Get all configs
 
-// Checking if the config item exists
+// Check existence
 has_config('key');
 
-// Shortcut to update the value of config item
-set_config_value('key', 'value');
+// Update
+set_config_value('key', 'new value');  // Quick value update
+update_config($config, $configItem);    // Full update
 
-// Updating config item
-$factory = new ConfigFactory($configId);
-$configItem = $factory->setName('updated-key')
-    ->setType(ConfigDataType::BOOLEAN)
-    ->setTags(['system'])//optional
-    ->setValue('0')
-    ->setDescription('updated description')
-    ->get();
+// Delete
+delete_config($config);
 
-update_config($configItem);
-
-// Removing config item
-delete_config('key');
-
-// Reading nested config items
-read_nested('foo.bar');
+// Nested
+read_nested('mail');  // Get all configs under 'mail' namespace
 ```
 
-### Custom Casters
-You can also custom casters:
+## Database Schema
+
+The package creates a `laravel_config` table with the following structure:
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | bigint | Primary key |
+| `name` | varchar (unique) | Configuration parameter name |
+| `type` | varchar | Data type (default: 'boolean') |
+| `val` | varchar (nullable) | Configuration value |
+| `description` | text (nullable) | Human-readable description |
+| `tags` | json (nullable) | Array of tags for organization |
+| `created_at` | timestamp | Creation timestamp |
+| `updated_at` | timestamp | Last update timestamp |
+
+## Configuration
+
+Publish the config file to customize the table name:
+
+```bash
+php artisan vendor:publish --provider="TarfinLabs\LaravelConfig\LaravelConfigServiceProvider" --tag="laravel-config"
+```
+
+In `config/laravel-config.php`:
 
 ```php
-$config = factory(Config::class)->create([
-    'name' => 'custom-cast-config-name',
-    'val' => [ConfigDataType::DATE],
-    'type' => AsEnumCollection::class.':'.ConfigDataType::class,
-]);
+return [
+    'table' => env('LARAVEL_CONFIG_TABLE', 'laravel_config'),
+];
 ```
 
-### Testing
+## Upgrading
 
-``` bash
+### From v5.x to v6.x
+
+**Breaking Changes:**
+
+1. **Class Renamed**: `LaravelConfig` class is now `ConfigManager`
+2. **Facade Moved**: `LaravelConfigFacade` is now `Facades\LaravelConfig`
+3. **Version Support**: PHP 8.0 and Laravel 8-9 are no longer supported
+
+**Migration Guide:**
+
+If you were directly instantiating the class:
+
+```php
+// Before (v5.x)
+use TarfinLabs\LaravelConfig\LaravelConfig;
+$manager = new LaravelConfig();
+
+// After (v6.x)
+use TarfinLabs\LaravelConfig\ConfigManager;
+$manager = new ConfigManager();
+```
+
+If you were importing the facade directly:
+
+```php
+// Before (v5.x)
+use TarfinLabs\LaravelConfig\LaravelConfigFacade;
+
+// After (v6.x)
+use TarfinLabs\LaravelConfig\Facades\LaravelConfig;
+```
+
+**No changes required if you:**
+- Use the `LaravelConfig` facade alias
+- Use helper functions (`read_config()`, `set_config_value()`, etc.)
+- Use `app('laravel-config')` container binding
+
+## Testing
+
+```bash
 composer test
 ```
 
-### Changelog
+## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Please see [CHANGELOG](CHANGELOG.md) for more information about recent changes.
 
 ## Contributing
 
@@ -207,18 +332,18 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Please make sure to update tests as appropriate.
 
-### Security
+## Security
 
-If you discover any security related issues, please email development@tarfin.com instead of using the issue tracker.
+If you discover any security-related issues, please email development@tarfin.com instead of using the issue tracker.
 
 ## Credits
 
-- [Turan Karatuğ](https://github.com/tkaratug)
+- [Turan Karatug](https://github.com/tkaratug)
 - [Faruk Can](https://github.com/frkcn)
-- [Yunus Emre Deligöz](https://github.com/deligoez)
-- [Hakan Özdemir](https://github.com/hozdemir)
+- [Yunus Emre Deligoz](https://github.com/deligoez)
+- [Hakan Ozdemir](https://github.com/hozdemir)
 - [All Contributors](../../contributors)
 
 ## License
 
-Laravel config is open-sourced software licensed under the [MIT license](LICENSE.md).
+Laravel Config is open-sourced software licensed under the [MIT license](LICENSE.md).
