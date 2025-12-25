@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use TarfinLabs\LaravelConfig\Config\Config;
 use TarfinLabs\LaravelConfig\Config\ConfigItem;
 
-class LaravelConfig
+class ConfigManager
 {
     /**
      * Get config by given name.
